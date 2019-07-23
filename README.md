@@ -6,3 +6,6 @@
 
 ### [OOP](https://github.com/SungMinHong/TIL/tree/master/OOP)
 - [OOP feature](https://github.com/SungMinHong/TIL/blob/master/OOP/OOP%20feature.md)
+
+### [JAVA](https://github.com/SungMinHong/TIL/tree/master/JAVA)
+- [MEMORY](https://github.com/SungMinHong/TIL/blob/master/JAVA/%EB%A9%94%EB%AA%A8%EB%A6%AC.md)
