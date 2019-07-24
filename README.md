@@ -12,4 +12,4 @@
 - [MEMORY](https://github.com/SungMinHong/TIL/blob/master/JAVA/%EB%A9%94%EB%AA%A8%EB%A6%AC.md)
 - [overloading & overriding](https://github.com/SungMinHong/TIL/blob/master/JAVA/overloading%26overriding)
 
-### [open source](https://github.com/SungMinHong/TIL/tree/master/openSource)
+### [Open source](https://github.com/SungMinHong/TIL/tree/master/openSource)
