@@ -21,4 +21,4 @@ Mutaion(view와 스토어의 데이터를 두개다 변형 시킴)을 하지 말
 하지만 페이지가 뷰를 직접 만들기에 성능 문제가 있음.
 그래서 자바스크립트로 이루어진 Virtual DOM(가상돔)에 한번 랜더링하고 기존의 DOM과 비교하고 정말 변화가 필요한 부분만 업데이트 해주도록 해결.
 
-[![Uploading 3CE44B7A-08D7-46BD-81AF-349840555970.png…]()](url)
+![리얼돔과 가상돔](https://user-images.githubusercontent.com/18229419/61805148-3b8a4b80-ae70-11e9-9cd2-12dac1134aba.png)
