@@ -1,6 +1,5 @@
 ## JVM
 
-### JAVA JVM
 - Java Virtual Machine 의 줄임말 이며 Java Byte Code를 OS에 맞게 해석 해주는 역할을 한다. Java compiler는 java 파일을 class라는 Java byte code로 변환시켜 준다.
 Byte Code 는 기계어가 아니기 때문에 OS에서 바로 실행되지 못한다.이때 JVM은 OS가 Byte Code를 이해할 수 있도록 해석해준다. 
 Byte Code는 JVM 위에서 OS에 상관없이 실행된다는 측면에서 이식성이 높다.
