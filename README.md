@@ -8,7 +8,7 @@
 - [OOP feature](https://github.com/SungMinHong/TIL/blob/master/OOP/OOP%20feature.md)
 
 ### [JAVA](https://github.com/SungMinHong/TIL/tree/master/JAVA)
-- [JVM] (https://github.com/SungMinHong/TIL/blob/master/JAVA/JVM.md)
+- [JVM](https://github.com/SungMinHong/TIL/blob/master/JAVA/JVM.md)
 - [MEMORY](https://github.com/SungMinHong/TIL/blob/master/JAVA/%EB%A9%94%EB%AA%A8%EB%A6%AC.md)
 - [overloading & overriding](https://github.com/SungMinHong/TIL/blob/master/JAVA/overloading%26overriding)
 
