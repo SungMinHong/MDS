@@ -54,3 +54,5 @@
                 .collect(Collectors.toList());
         System.out.println(newstringNumbers);
 </pre>
+
+## CompletableFuture API 강화
