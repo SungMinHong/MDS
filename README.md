@@ -12,6 +12,7 @@
 - [memory](https://github.com/SungMinHong/TIL/blob/master/JAVA/%EB%A9%94%EB%AA%A8%EB%A6%AC.md)
 - [overloading & overriding](https://github.com/SungMinHong/TIL/blob/master/JAVA/overloading%26overriding)
 - [abstract class & interface](https://github.com/SungMinHong/TIL/blob/master/JAVA/abstract&interface.md)
+- [Data Type](https://github.com/SungMinHong/TIL/blob/master/JAVA/DataType.md)
 
 ### [Open source](https://github.com/SungMinHong/TIL/tree/master/openSource)
 - [redis](https://github.com/SungMinHong/TIL/blob/master/openSource/redis.md)
