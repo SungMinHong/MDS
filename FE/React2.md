@@ -17,28 +17,24 @@
 
 ## JSX기본 문법 알아보기 1
 
-HTML이랑 비슷하지만, 지켜야 할 규칙이 몇가지 있다.
+- HTML이랑 비슷하지만, 지켜야 할 규칙이 몇가지 있다.
 (JSX 참고문서 let const 화살표 함수)
 
-- var 의 스코프는 함수 단위이다. 블록단위가 아니다. es6에서는 더이상 var 사용안함.
-<br/>
+### var 의 스코프는 함수 단위이다. 블록단위가 아니다. es6에서는 더이상 var 사용안함.
 ![](https://user-images.githubusercontent.com/18229419/61837579-571d4280-aec0-11e9-8eaa-88750c536f6d.png)
 
 
-- let의 스코프는 블록단위이다. 유동적인 값
-<br/>
+### let의 스코프는 블록단위이다. 유동적인 값
 ![](https://user-images.githubusercontent.com/18229419/61837582-597f9c80-aec0-11e9-9cae-585d03020481.png)
 
-- const: 한번 선언 후 고정적인 값
+### const: 한번 선언 후 고정적인 값
 
-### JSX기본 문법 알아보기 2
+## JSX기본 문법 알아보기 2
 
-- Style 적용
-<br/>
+### Style 적용
 ![](https://user-images.githubusercontent.com/18229419/61837657-c98e2280-aec0-11e9-847c-6be2db83c14c.png)
 <br/>
 ![](https://user-images.githubusercontent.com/18229419/61837662-cd21a980-aec0-11e9-9e91-657e8b9a2657.png)
 
-- 주석달기
-<br/>
+### 주석달기
 ![](https://user-images.githubusercontent.com/18229419/61837664-ceeb6d00-aec0-11e9-8ace-fc10c5f723f4.png)
