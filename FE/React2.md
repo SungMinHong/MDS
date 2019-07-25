@@ -21,13 +21,12 @@ HTML이랑 비슷하지만, 지켜야 할 규칙이 몇가지 있다.
 (JSX 참고문서 let const 화살표 함수)
 
 var 의 스코프는 함수 단위이다. 블록단위가 아니다. es6에서는 더이상 var 사용안함.
+<br/>
 ![](https://user-images.githubusercontent.com/18229419/61837579-571d4280-aec0-11e9-8eaa-88750c536f6d.png)
 
 
 let의 스코프는 블록단위이다. 유동적인 값
+<br/>
 ![](https://user-images.githubusercontent.com/18229419/61837582-597f9c80-aec0-11e9-9cae-585d03020481.png)
 
-const 한번 선언 후 고정적인 값
-
-
-조건부 랜더링
+const: 한번 선언 후 고정적인 값
