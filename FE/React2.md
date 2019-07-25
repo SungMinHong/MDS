@@ -34,8 +34,11 @@ HTML이랑 비슷하지만, 지켜야 할 규칙이 몇가지 있다.
 ### JSX기본 문법 알아보기 2
 
 - Style 적용
+<br/>
 ![](https://user-images.githubusercontent.com/18229419/61837657-c98e2280-aec0-11e9-847c-6be2db83c14c.png)
+<br/>
 ![](https://user-images.githubusercontent.com/18229419/61837662-cd21a980-aec0-11e9-9e91-657e8b9a2657.png)
 
 - 주석달기
+<br/>
 ![](https://user-images.githubusercontent.com/18229419/61837664-ceeb6d00-aec0-11e9-8ace-fc10c5f723f4.png)
