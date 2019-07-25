@@ -7,7 +7,7 @@
         - Integral Type
             - Integer Type(short, int, long)
             - Floating Point Type(float, double)
-        - Character Type(char)
+    - Character Type(char)
 <br></br>
 
 - Reference Type
