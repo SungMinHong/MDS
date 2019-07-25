@@ -8,9 +8,9 @@
             - Integer Type(short, int, long)
             - Floating Point Type(float, double)
         - Character Type(char)
-ㄴ Reference Type
-    ㄴ Class Type
-    ㄴ Interface Type
-    ㄴ Array Type
-    ㄴ Enum Type
-    ㄴ etc.
+- Reference Type
+    - Class Type
+    - Interface Type
+    - Array Type
+    - Enum Type
+    - etc.
