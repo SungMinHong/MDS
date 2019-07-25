@@ -8,7 +8,8 @@
             - Integer Type(short, int, long)
             - Floating Point Type(float, double)
         - Character Type(char)
-<br/>
+<br></br>
+
 - Reference Type
     - Class Type
     - Interface Type
