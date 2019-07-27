@@ -23,7 +23,6 @@ DNS 서버가 도메인에 대한 IP 주소를 송신하는 과정은 약간 복
 (http://www.naver.com으로 가정하자) 그 후 지정된 DNS서버는 Root 네임서버에 www.naver.com을 질의하고, Root 네임서버는 .com 네임서버의 ip주소를 알려준다. 
  그 후 .com 네임서버에 www.naver.com을 질의하면 naver.com 네임서버의 ip주소를 받고, 그곳에 질의를 또 송신하면 www.naver.com의 IP주소를 수신하게 된다.
 이와 같이 여러번 왔다갔다 하는 이유는, 도메인의 계층화 구조에 따라 DNS서버도 계층화되어있기 때문이다. 이렇게 계층화되어 있으므로 도메인의 가장 최상단, 즉 가장 뒷쪽(.com, .kr 등등)을 담당하는 DNS서버는 전세계에 13개 뿐이다.
-> 출처: https://www.youtube.com/watch?v=2ZUxoi7YNgs#action=share
 <br/> 
 
 ## 4. 웹 서버 접속
@@ -43,3 +42,6 @@ DNS 서버가 도메인에 대한 IP 주소를 송신하는 과정은 약간 복
 ![](https://t1.daumcdn.net/cfile/tistory/213F623C566BAE253B)
 <br/> 
 > 좀 더 자세한 랜더링 과정을 알기 원한다면: https://d2.naver.com/helloworld/59361
+> 출처: https://www.youtube.com/watch?v=2ZUxoi7YNgs#action=share
+> 출처:https://medium.com/@pks2974/website%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%B3%B4%EC%97%AC%EC%A7%80%EA%B2%8C%EB%90%98%EB%8A%94-%EA%B1%B8%EA%B9%8C-1-108009d4bdb
+> 출처: https://hahahoho5915.tistory.com/15
