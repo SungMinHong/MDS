@@ -40,6 +40,29 @@ DNS 서버가 도메인에 대한 IP 주소를 송신하는 과정은 약간 복
 ### 네트워크 계층
 - OSI 7계층, TCP/IP 4계층
 ![](https://t1.daumcdn.net/cfile/tistory/213F623C566BAE253B)
+<br/>
+
+1계층 네트워크 액세스 계층(Network Access Layer or Network Interface Layer)
+- OSI 7계층의 물리계층과 데이터 링크 계층에 해당한다.
+- 물리적인 주소로 MAC을 사용한다.
+- LAN, 패킷망, 등에 사용된다.
+
+2계층 인터넷 계층(Internet Layer)
+- OSI 7계층의 네트워크 계층에 해당한다. 
+- 통신 노드 간의 IP패킷을 전송하는 기능과 라우팅 기능을 담당한다.
+- 프로토콜 – IP, ARP, RARP
+
+3계층 전송 계층(Transport Layer)
+- OSI 7계층의 전송 계층에 해당한다.
+- 통신 노드 간의 연결을 제어하고, 신뢰성 있는 데이터 전송을 담당한다.
+- 프로토콜 – TCP, UDP
+
+4계층 응용 계층(Application Layer)
+- OSI 7계층의 세션 계층, 표현 계층, 응용 계층에 해당한다.
+- TCP/UDP 기반의 응용 프로그램을 구현할 때 사용한다.
+
+프로토콜 – FTP, HTTP, SSH
+
 <br/> 
 
 >  출처: https://www.youtube.com/watch?v=2ZUxoi7YNgs#action=share
