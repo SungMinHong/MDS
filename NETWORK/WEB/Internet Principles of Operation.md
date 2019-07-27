@@ -23,6 +23,7 @@ DNS 서버가 도메인에 대한 IP 주소를 송신하는 과정은 약간 복
 (http://www.naver.com으로 가정하자) 그 후 지정된 DNS서버는 resolver서버(ISP: 인터넷 서비스 제공자)에 요청 도메인에 해당하는 IP주소가 있는지 확인한다. 만약 없으면 Root 네임서버에 www.naver.com을 질의하고, Root 네임서버는 .com 네임서버의 ip주소를 알려준다. 
  그 후 .com 네임서버에 www.naver.com을 질의하면 naver.com 네임서버의 ip주소를 받고, 그곳에 질의를 또 송신하면 www.naver.com의 IP주소를 수신하게 된다.
 이와 같이 여러번 왔다갔다 하는 이유는, 도메인의 계층화 구조에 따라 DNS서버도 계층화되어있기 때문이다. 이렇게 계층화되어 있으므로 도메인의 가장 최상단, 즉 가장 뒷쪽(.com, .kr 등등)을 담당하는 DNS서버는 전세계에 13개 뿐이다.
+![야후 도메인 찾는 과정](https://user-images.githubusercontent.com/18229419/61994113-58fa2800-b0b1-11e9-98de-d409bcc4cbff.png)
 <br/> 
 > 좀 더 자세한 IP찾는 과정을 원한다면 -> [링크로 이동](https://www.youtube.com/watch?v=mpQZVYPuDGU)
 
