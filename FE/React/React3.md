@@ -16,6 +16,7 @@
 !()[https://user-images.githubusercontent.com/18229419/61991884-7f0fd000-b091-11e9-98d3-354a722e7291.png]
 
 App.js
+~~~
 import React, { Component } from "react";
 import Counter from "./Counter";
 
@@ -26,9 +27,10 @@ return <Counter />;
 }
 
 export default App;
-
+~~~
 
 Counter.js
+~~~
 import React, { Component } from "react";
 
 class Counter extends Component {
@@ -61,3 +63,4 @@ return (
 }
 }
 export default Counter;
+~~~
