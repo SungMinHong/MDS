@@ -7,8 +7,8 @@
 ![](https://user-images.githubusercontent.com/18229419/61991843-c2b60a00-b090-11e9-8400-fac56245fd2f.png)
 - state는 컴포넌트 자기 자신이 가지고 있다. 부모가 자식에게 주는 데이터가 아니다.
 - Props는 읽기 전용이지만 state는 setState( )로 변경이 가능하다.
-!()[https://user-images.githubusercontent.com/18229419/61991884-7f0fd000-b091-11e9-98d3-354a722e7291.png]
-
+ ![] (https://user-images.githubusercontent.com/18229419/61991884-7f0fd000-b091-11e9-98d3-354a722e7291.png)
+ 
 App.js
 ~~~js
 import React, { Component } from "react";
