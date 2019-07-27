@@ -22,3 +22,68 @@
 - componentDidUpdate: 컴포넌트가 업데이트 되었을 때 호출되는 함수이다. 주로  state가 바뀐 경우 이전의 상태와 비교해 지금 상태가 바뀐 경우 어떤 작업을 할지 정의 해둘 수 있다. 스크롤 위치등을 받아서 그려줄 수 있다(크롬, 파이어폭스는 기본적으로 제공돼서 필요 없지만 다른 브라우저에서는 직접 코드를 작성해야함.
 
 - componentWillUnmount: 컴포넌트가 사라지는 과정에서 호출되는 함수이다. componentDidMount에서 설정한 리스너를 없애주는 작업을 할 수 있다.
+
+
+[예제 코드](https://codesandbox.io/s/xl313zyrkw)
+
+
+컴포넌트에 에러 발생시
+render 함수에서 에러가 발생한다면, 리액트 앱이 크래쉬 되어버립니다. 그러한 상황에 유용하게 사용 할 수 있는 API가 한 가지 있다.
+
+ComponentDidCatch로 잡으면 된다. 단 부모 컴포넌트에서만 잡을 수 있다.
+
+~~~js
+import React, { Component } from 'react';
+import MyComponent from './MyComponent';
+
+class App extends Component {
+state = {
+counter: 1,
+error: false
+};
+
+componentDidCatch(error, info) {
+console.log(error);
+console.log(info);
+this.setState({
+error: true
+});
+}
+
+constructor(props) {
+super(props);
+console.log('constructor');
+}
+
+componentDidMount() {
+console.log('componentDidMount');
+// console.log(this.myDiv.getBoundingClientRect());
+}
+
+handleClick = () => {
+console.log(this.state.counter + 1);
+this.setState({
+counter: this.state.counter + 1
+});
+};
+
+render() {
+if (this.state.error) {
+return (
+<div>
+예상치 못한 에러입니다. 최선을 다해 복구하겠습니다. 감사합니다.
+</div>
+);
+}
+return (
+<div ref={ref => (this.myDiv = ref)}>
+{this.state.counter > 15 && <MyComponent value={this.state.counter} />}
+{this.state.counter < 10 && <MyComponent value={this.state.counter} />}
+<button onClick={this.handleClick}>Click Me</button>
+</div>
+);
+}
+}
+
+export default App;
+~~~
