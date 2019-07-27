@@ -1,11 +1,10 @@
 ## Props를 사용하는 방법
 
 ### Props & State
-- Props와 state는 리액트에서 데이터를 다룰 때 사용하는 개념이다.
-- Props는 부모 컴포넌트가 자식 컴포넌트에게 데이터를 넘겨줄 때 사용한다.<br/>
+- props와 state는 리액트에서 데이터를 다룰 때 사용하는 개념이다.
+- props는 부모 컴포넌트가 자식 컴포넌트에게 데이터를 넘겨줄 때 사용한다.<br/>
 ![부모자식데이터전달](https://user-images.githubusercontent.com/18229419/61991842-c184dd00-b090-11e9-85d9-d58982577fbb.png)
 ![](https://user-images.githubusercontent.com/18229419/61991843-c2b60a00-b090-11e9-8400-fac56245fd2f.png)
-
 - state는 컴포넌트 자기 자신이 가지고 있다. 부모가 자식에게 주는 데이터가 아니다.
 - Props는 읽기 전용이지만 state는 setState( )로 변경이 가능하다.
 !()[https://user-images.githubusercontent.com/18229419/61991884-7f0fd000-b091-11e9-98d3-354a722e7291.png]
