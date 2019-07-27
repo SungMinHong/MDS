@@ -41,6 +41,7 @@ DNS 서버가 도메인에 대한 IP 주소를 송신하는 과정은 약간 복
 - OSI 7계층, TCP/IP 4계층
 ![](https://t1.daumcdn.net/cfile/tistory/213F623C566BAE253B)
 <br/> 
+
 > 좀 더 자세한 랜더링 과정을 알기 원한다면: https://d2.naver.com/helloworld/59361
 > 출처: https://www.youtube.com/watch?v=2ZUxoi7YNgs#action=share
 > 출처:https://medium.com/@pks2974/website%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%B3%B4%EC%97%AC%EC%A7%80%EA%B2%8C%EB%90%98%EB%8A%94-%EA%B1%B8%EA%B9%8C-1-108009d4bdb
