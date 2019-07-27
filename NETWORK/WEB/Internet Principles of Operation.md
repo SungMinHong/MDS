@@ -25,4 +25,7 @@ DNS 서버가 도메인에 대한 IP 주소를 송신하는 과정은 약간 복
 
 ## 4. 웹 서버 접속
  Http Request를 위해, TCP Socket을 개방하고, 연결한다. 이 과정에서 3-Hand-Shaking이 일어난다.
-TCP 연결에 성공하면, Http Request가 TCP Socket을 통해 보내진다. 이에 대한 응답으로, 웹 페이지의 정보가 사용자의 PC로 들어온다.                                                       
+TCP 연결에 성공하면, Http Request가 TCP Socket을 통해 보내진다. 이에 대한 응답으로, 웹 페이지의 정보가 사용자의 PC로 들어온다.
+만약 HTML을 요청이었다면 이후 렌더링 엔진이 HTML과 CSS를 파싱하여 화면에 표시한다.
+
+자세한 랜더링 과정을 보고 싶다면. (이 링크로 이동)[https://d2.naver.com/helloworld/59361] 
