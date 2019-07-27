@@ -60,8 +60,7 @@ DNS 서버가 도메인에 대한 IP 주소를 송신하는 과정은 약간 복
 4계층 응용 계층(Application Layer)
 - OSI 7계층의 세션 계층, 표현 계층, 응용 계층에 해당한다.
 - TCP/UDP 기반의 응용 프로그램을 구현할 때 사용한다.
-
-프로토콜 – FTP, HTTP, SSH
+- 프로토콜 - FTP, HTTP, SSH
 
 <br/> 
 
