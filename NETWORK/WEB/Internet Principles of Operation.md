@@ -25,7 +25,7 @@ DNS 서버가 도메인에 대한 IP 주소를 송신하는 과정은 약간 복
 이와 같이 여러번 왔다갔다 하는 이유는, 도메인의 계층화 구조에 따라 DNS서버도 계층화되어있기 때문이다. 이렇게 계층화되어 있으므로 도메인의 가장 최상단, 즉 가장 뒷쪽(.com, .kr 등등)을 담당하는 DNS서버는 전세계에 13개 뿐이다.
 ![야후 도메인 찾는 과정](https://user-images.githubusercontent.com/18229419/61994113-58fa2800-b0b1-11e9-98de-d409bcc4cbff.png)
 <br/>
-위 그림의 Resolver서버는 DNS서버와 같다. DNS서버가 IP주소를 찾기위해 각 서버들을 재귀적으로 호출한다 하여 재귀적 Resolver 서버라고도 한다.[관련링크](https://serverfault.com/questions/422288/what-is-the-difference-between-authoritative-nameserver-and-recursive-resolver)
+위 그림의 Resolver서버는 DNS서버와 같다. DNS서버가 IP주소를 찾기위해 각 서버들을 재귀적으로 호출한다 하여 재귀적 Resolver 서버라고도 한다. [관련링크](https://serverfault.com/questions/422288/what-is-the-difference-between-authoritative-nameserver-and-recursive-resolver)
 
 > 좀 더 자세한 IP찾는 과정을 원한다면 -> [링크로 이동](https://www.youtube.com/watch?v=mpQZVYPuDGU)
 
