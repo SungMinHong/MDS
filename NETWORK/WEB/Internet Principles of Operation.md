@@ -20,11 +20,13 @@
 DNS 서버는 이에 대한 결과로, 웹 서버의 IP 주소를 사용자 PC에 돌려준다.
 DNS 서버가 도메인에 대한 IP 주소를 송신하는 과정은 약간 복잡하다.
 사용자의 PC는 가장 먼저, 지정된 DNS서버(우리나라의 경우 통신사 별로 지정된 DNS서버가 있다.)에 DNS Query를 송신한다.
-(http://www.naver.com으로 가정하자) 그 후 지정된 DNS서버는 resolver서버(ISP: 인터넷 서비스 제공자)에 요청 도메인에 해당하는 IP주소가 있는지 확인한다. 만약 없으면 Root 네임서버에 www.naver.com을 질의하고, Root 네임서버는 .com 네임서버의 ip주소를 알려준다. 
+(http://www.naver.com으로 가정하자) 그 후 지정된 DNS서버(인터넷 서비스 제공자가 제공한)는 요청 도메인에 해당하는 IP주소가 캐시되어 있는지 확인한다. 만약 없으면 Root 네임서버에 www.naver.com을 질의하고, Root 네임서버는 .com 네임서버의 ip주소를 알려준다. 
  그 후 .com 네임서버에 www.naver.com을 질의하면 naver.com 네임서버의 ip주소를 받고, 그곳에 질의를 또 송신하면 www.naver.com의 IP주소를 수신하게 된다.
 이와 같이 여러번 왔다갔다 하는 이유는, 도메인의 계층화 구조에 따라 DNS서버도 계층화되어있기 때문이다. 이렇게 계층화되어 있으므로 도메인의 가장 최상단, 즉 가장 뒷쪽(.com, .kr 등등)을 담당하는 DNS서버는 전세계에 13개 뿐이다.
 ![야후 도메인 찾는 과정](https://user-images.githubusercontent.com/18229419/61994113-58fa2800-b0b1-11e9-98de-d409bcc4cbff.png)
-<br/> 
+<br/>
+위 그림의 Resolver서버는 DNS서버와 같다. DNS서버가 IP주소를 찾기위해 각 서버들을 재귀적으로 호출한다 하여 재귀적 Resolver 서버라고도 한다.[관련링크](https://serverfault.com/questions/422288/what-is-the-difference-between-authoritative-nameserver-and-recursive-resolver)
+
 > 좀 더 자세한 IP찾는 과정을 원한다면 -> [링크로 이동](https://www.youtube.com/watch?v=mpQZVYPuDGU)
 
 
