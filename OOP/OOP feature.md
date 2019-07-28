@@ -23,8 +23,8 @@ Class의 변수와 Method를 물려받아 Class를 정의하는 방법을 상속
 4. 다형성(Polymorphism)
 Class의 같은 Method를 호출해도 각기 다른 method가 호출되는 특징을 다형성의 특징이라 부른다.
 - 총 3가지 의 경우 다형성의 특징을 가진다고 볼 수 있다.
-  - method의 이름은 같지만, mothod의 파라미터의 타입, 파라미터의 개수, return type에 따라 실제로 다른 메소드가 호출될 수 있도록 구현할 수 있는데 이것을 Overloading이라고 부른다
+  - method의 이름은 같지만, mothod의 파라미터의 타입, 파라미터의 개수, return type에 따라 실제로 다른 메소드가 호출될 수 있도록 구현하는 기능을 overloading이라고 부른다
   - 자식 Class는 물려받은 method를 재정의 할 수 있는데 이러한 기능을 overwriting이라고 부른다.
-  - 부모클래스, 인터페이스 등을 통해 접근하는 경우 Instance에 따라서도 다른 메소드가 호출될 수 있다.
+  - 부모클래스, 인터페이스 등을 통해 접근하는 경우 실제 구현된 각각의 class에 따라서 다른 메소드가 호출될 수 있다.
 
 
