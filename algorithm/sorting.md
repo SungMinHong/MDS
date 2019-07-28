@@ -26,8 +26,8 @@
 <br/>
 <br/>
 +) 최악의 상황(이미 리스트가 정렬되어 있는 경우)에서 퀵정렬은 시간복잡도가 O(n^2)까지 증가한다. 이 때문에 예전에 자바에서는 합병정렬을 기본 컬렉션 sort로 제공했다. 이후 자바에서는(단 openJdk는 확실치 않음) 퀵정렬(리얼환경에서 대부분 아주 빠른편임)의 장점은 살리고 단점을 보완하기 위해 삽입정렬과 합쳐진 정렬 알고리즘인 팀정렬을 기본 컬렉션 정렬로 제공하고 있다.
-
 <br/>
+
 ![정렬](https://user-images.githubusercontent.com/18229419/62004026-e6458700-b15a-11e9-893a-851e87b5f6b5.png)
 
 > 출처: https://github.com/sunghyunjo/TIL/blob/master/algorithm/sorting%20Algorithm.md
