@@ -50,8 +50,6 @@ public class StopWatchTest {
         }
         stopWatch.stop();
         
-        System.out.println(stopWatch.shortSummary());
-        System.out.println(stopWatch.getTotalTimeMillis());
         System.out.println(stopWatch.prettyPrint());
     }
 }
@@ -63,6 +61,7 @@ public class StopWatchTest {
 <br/>
 
 ~~~
+...
 -----------------------------------------
 ms % Task name 
 ----------------------------------------- 
