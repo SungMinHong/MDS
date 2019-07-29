@@ -16,6 +16,7 @@ public void testSimpleTimer() {
 }
 ~~~
 <br/>
+<br/>
 
 - 다음 예제는 스프링 프레임워크에서 제공하는 유틸 중 하나인 org.springframework.util.StopWatch에 대한 간단한 테스트다.
 
@@ -55,7 +56,8 @@ public class StopWatchTest {
     }
 }
 ~~~
-
+<br/>
+<br/>
 - 테스트 결과
 다음과 같이 총 실행 시간 중 BigDecimal type 계산이 약 60프로를 차지하며 대략 1.5배 정도 더 느리다는 것을 확인할 후 있다.
 <br/>
