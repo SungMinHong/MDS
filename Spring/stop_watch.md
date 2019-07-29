@@ -70,6 +70,6 @@ ms % Task name
 ~~~
 <br/>
 
-+) 티몬의 베스트 탭 api 속도개선을 위해 사용한 StopWatch
++) 티몬의 베스트 탭 api 속도 개선을 위해 오래걸리는 로직을 찾기위해 StopWatch를 사용했다. 메서드 내에서 특정 반복문 등의 시간을 측정할 때 적합하다.
 
 > 출처: https://java.ihoney.pe.kr/506 
