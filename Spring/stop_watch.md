@@ -57,7 +57,7 @@ public class StopWatchTest {
 
 - 테스트 결과
 다음과 같이 총 실행 시간 중 BigDecimal type 계산이 약 60프로를 차지하며 대략 1.5배 정도 더 느리다는 것을 확인할 후 있다.
-
+<br/>
 ~~~java
 -----------------------------------------
 ms % Task name 
@@ -65,6 +65,6 @@ ms % Task name
 00017 040% Long type
 00025 060% BigDecimal type 
 ~~~
-
+<br/>
 
 > 출처: https://java.ihoney.pe.kr/506 
