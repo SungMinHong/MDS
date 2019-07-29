@@ -10,3 +10,5 @@
 - Large Computations - Commands for searching data are not suited to large scans of data with advanced computation on the database side.
 - Data Availability - ES makes data available in "near real-time" which may require additional considerations in your application (ie: comments page where a user adds new comment, refreshing the page might not actually show the new post because the index is still updating).
 - Durability - Backups, reliability and durability are not as high priority as in other data stores. Everything for indexing, storage and (most critically) cluster coordination is developed in-house and prone to bugs and bad architecture. This is probably the most important if you're going to make ES the primary store since losing your data is never good.
+
+> 출처: https://www.quora.com/Why-shouldnt-I-use-ElasticSearch-as-my-primary-datastore
