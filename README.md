@@ -22,6 +22,6 @@
 - [React](https://github.com/SungMinHong/TIL/tree/master/FE/React)
 
 ### [Algorithm](https://github.com/SungMinHong/TIL/tree/master/algorithm)
-- [complexity](https://github.com/SungMinHong/TIL/blob/master/algorithm/complexity.md)
-- [algorithm](https://github.com/SungMinHong/TIL/blob/master/algorithm/sorting.md)
+- [time complexity& space complexity](https://github.com/SungMinHong/TIL/blob/master/algorithm/complexity.md)
+- [sorting](https://github.com/SungMinHong/TIL/blob/master/algorithm/sorting.md)
 - [[cache] page replacement algorithm](https://github.com/SungMinHong/TIL/blob/master/algorithm/page_replacement_algorithm.md)
