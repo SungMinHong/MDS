@@ -54,11 +54,12 @@ public class StopWatchTest {
         System.out.println(stopWatch.prettyPrint());
     }
 }
+~~~
 
 - 테스트 결과
 다음과 같이 총 실행 시간 중 BigDecimal type 계산이 약 60프로를 차지하며 대략 1.5배 정도 더 느리다는 것을 확인할 후 있다.
 <br/>
-~~~java
+~~~
 -----------------------------------------
 ms % Task name 
 ----------------------------------------- 
