@@ -33,5 +33,5 @@
 ### [Cloud](https://github.com/SungMinHong/TIL/tree/master/cloud)
 - [Azure](https://github.com/SungMinHong/TIL/blob/master/cloud/azure.md)
 
-### [OS]()
-- [deadlock]()
+### [OS](https://github.com/SungMinHong/TIL/tree/master/os)
+- [deadlock](https://github.com/SungMinHong/TIL/blob/master/os/deadlock.md)
