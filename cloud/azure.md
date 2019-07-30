@@ -6,6 +6,14 @@ CPU Steal time은 하이퍼 바이저가 다른 가상 프로세서를 서비스
 4개의 VM 중 하나 인 경우 해당 CPU 사용률은 모든 CPU 주기의 25%로 제한되지 않는다. CPU 사용 비율보다 많은 비율을 사용할 수 있다.
 </br>
 
-=> 만약 동일 물리 서버내 다른 VM에 떠있는 타서비스 인스턴스가 CPU 사용률이 급격히 증가하면 자사 VM내 서비스 인스턴스가 영향을 받을 수 있다. 
+## CPU steal time이 높은 원인은?
+- 만약 동일 물리 서버내 다른 VM에 떠있는 타서비스 인스턴스가 CPU 사용률이 급격히 증가한 경우.
+- 더 많은 CPU 리소스를 가지고 있는 VM을 필요로 하는 경우.
+
+## 판단하는 방법
+### 1. 클라우드 사업자의 과다 판매의 경우
+![](https://user-images.githubusercontent.com/18229419/62093072-cd4fe980-b2b2-11e9-9300-1d7ad65cb3f7.png)
+### 2. VM내 리소스 부족의 경우
+![](https://user-images.githubusercontent.com/18229419/62093067-c9bc6280-b2b2-11e9-8439-0102547e589b.png)
 
 > 출처: https://brunch.co.kr/@leedongins/23
