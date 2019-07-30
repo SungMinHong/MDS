@@ -4,6 +4,7 @@
 
 ## 데드락이 발생하는 경우 예시
 ![프로세스2개가 서로 필요한 자원에 Lock을 걸어 데드락이 걸린 상태](https://t1.daumcdn.net/cfile/tistory/243E89355714C26E28)
+<br/>
 Process1과 Process2가 리소스 A, B 둘 다를 얻어야 실행 가능하다고 가정할 때,
 첫 번째 타임에 Process1이 리소스 A를 사용하고 Lock을 걸고 Process2가 리소스 B를 사용하며 Lock을 건 경우
 두 번째 타임에 Process1은 Lock 상태인 리소스 B를, Process2는 Lock 상태인 리소스 A를 기다리게 된다.
@@ -43,8 +44,8 @@ Process1과 Process2가 리소스 A, B 둘 다를 얻어야 실행 가능하다�
 <br/>
 
 ## 데드락 상태를 회피하기 위한 대표적인 알고리즘은 두 가지가 있다.
-  - 1) 자원 할당 그래프 알고리즘 (Resource Allocation Graph Algorithm) 
-  - 2) 은행원 알고리즘 (Banker’s algorithm)
+  - 자원 할당 그래프 알고리즘 (Resource Allocation Graph Algorithm) 
+  - 은행원 알고리즘 (Banker’s algorithm)
 <br/>
 
 > 출처: https://github.com/sunghyunjo/TIL/blob/master/os/deadlock.md
