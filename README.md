@@ -16,6 +16,8 @@
 - [JAVA9](https://github.com/SungMinHong/TIL/blob/master/JAVA/JAVA9.md)
 
 ### [Spring](https://github.com/SungMinHong/TIL/tree/master/Spring)
+- [AOP](https://github.com/SungMinHong/TIL/blob/master/Spring/aop.md)
+- [proxy](https://github.com/SungMinHong/TIL/blob/master/Spring/proxy.md)
 - [StopWatch](https://github.com/SungMinHong/TIL/blob/master/Spring/stop_watch.md)
 
 ### [Open source](https://github.com/SungMinHong/TIL/tree/master/openSource)
