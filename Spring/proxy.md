@@ -54,7 +54,8 @@ public void pointcutAdvisor() {
   //이름 비교조건 설정, sayH로 시작하는 모든 메소드를 선택하게 한다.
   pointcut.setMappedName("sayH*");
   
-  pfBean.addAdvisor(new DefalutPointcutAdvisor(pointcut, new UppercaseAdvisor));
+  //UppercaseAdvise == 문자열을 모두 대문자로 변환하는 어드바이스(부가기능)
+  pfBean.addAdvisor(new DefalutPointcutAdvisor(pointcut, new UppercaseAdvise()));
   
   Hello proxiedHello = (Hello) pfBean.getObject();
   
