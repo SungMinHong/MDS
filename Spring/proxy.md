@@ -42,7 +42,29 @@ ProxyFactoryBean 하나만으로 여러 개의 부가 기능을 제공해주는 
 - 어드바이스와 포인트컷은 모두 프록시에 DI로 주입돼서 사용된다.
 - 두 가지 모두 여러 프록시에서 공유가 가능하도록 만들어지기 때문에 스프링의 싱글톤 빈으로 등록이 가능하다. 
 
-![포인트컷 까지 적용한 ProxyFactoryBean](https://user-images.githubusercontent.com/18229419/62299548-191bb200-b4b0-11e9-8ca5-72e3285a7636.png)
+~~~java
+@Test
+public void pointcutAdvisor() {
+  ProxyFactoryBean pfBean = new ProxyFactoryBean();
+  pfBean.setTatget(new HelloTaget());
+  
+  //메소드 이름을 비교해서 대상을 선정하는 알고리즘을 제공하는 포인트컷 생성
+  NameMatchMethodPointcut pointcut = new NameMatchMethodPointcut();
+  
+  //이름 비교조건 설정, sayH로 시작하는 모든 메소드를 선택하게 한다.
+  pointcut.setMappedName("sayH*");
+  
+  pfBean.addAdvisor(new DefalutPointcutAdvisor(pointcut, new UppercaseAdvisor));
+  
+  Hello proxiedHello = (Hello) pfBean.getObject();
+  
+  assetThat(proxiedHello.sayHello("SungMin"), is("HELLO SUNGMIN"));
+  assetThat(proxiedHello.sayHi("SungMin"), is("HI SUNGMIN"));
+  
+  //메소드 이름이 포인트컷의 선정조건에 맞지 않으므로, 부가기능(대문자 변환)이 적용되지 않는다.
+  assetThat(proxiedHello.sayThankYou("SungMin"), is("Thank You SungMin"));  
+}
+~~~
 
 어드바이저 = 포인트컷(매소드 선정 알고리즘) + 어드바이스(부가기능)
 
