@@ -11,10 +11,11 @@ Spring MVC와 분리되어 관리 및 동작한다. (Spring MVC는 DispatcherSer
 - 접근 주체(Principal): 보호된 대상에 접근하는 유저
 - 인증(Authenticate): 현재 유저가 누구인지 확인(ex. 로그인), 애플리케이션의 작업을 수행할 수 있는 주체임을 증명
 - 인가(Authorize): 현재 유저가 어떤 서비스, 페이지에 접근할 수 있는 권한이 있는지 검사
-- 권한: 인증된 주체가 애플리케이션의 동작을 수행할 수 있는 권한이 있는지 검사
+- 권한(Authorization): 인증된 주체가 애플리케이션의 동작을 수행할 수 있는 권한이 있는지 검사
   - 권한 승인이 필요한 부분으로 접근하려면 인증 과정을 통해 주체가 증명 되어야만 한다
   - 권한 부여에도 두가지 영역이 존재하는데 웹 요청 권한, 메소드 호출 및 도메인 인스턴스에 대한 접근 권한 부여
-  
+> +)인증과 권한을 구분해 생각하는 것이 스프링 시큐리티를 이해하는데 가장 중요!
+
 ## 2. Spring Security의 구조
 ### 2-1. 인증관련 구조
 
@@ -76,8 +77,15 @@ private List<AuthenticationProvider> providers;
 - AuthenticationManager : 인증요청을 받고 Authentication를 채운다.
 - AuthenticationProvider : 실제 인증이 일어나며, 성공하면 Authentication.isAuthenticated = true 를 한다.
 
+## 3.권한
+### 3-1. 권한 부여 (grant authority)
+사용자 인증을 성공적으로 마쳤다면, 이제 이 유저에게 권한을 부여한다. 예를 들어 같은 웹사이트에 로그인을 해도 admin 계정으로 로그인을 하면, 일반 사용자들에게는 보이지 않던 관리 메뉴가 하나 더 생기기도 하는것 처럼 말이다. 이런 경우에 일반사용자는 일반 권한을, admin은 관리자+일반 권한을 가지고 있는 것이다. 보안이 제대로 동작하는 웹사이트를 구축하려면 로그인한 유저에게 적절한 권한을 부여하고, 부여된 권한을 잘 관리해야한다.
 
+### 3-2. 리소스 가로채기 (intercept)
+권한이 있는 유저에게만 리소스를 제공하는 것도, 일단 리소스를 내가 가지고 있어야 가능하다. 보안이란 본래 권한이 없는 자들이 원천적으로 리소스에 접근할 수 없도록 막아내는 것이다. 그런 의미에서 적절한 권한을 가진자만 해당 자원에 접근할 수 있도록 자원의 외부요청을 원천적으로 가로채는 것(Intercept)은 authorization의 중요한 원칙이다.
 
 > 출처: https://sjh836.tistory.com/165
 
 > 출처: https://offbyone.tistory.com/88
+
+> 출처: https://hanee24.github.io/2018/04/21/authentication-authorization/
