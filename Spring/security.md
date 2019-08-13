@@ -24,7 +24,7 @@ Spring Security는 세션-쿠키방식으로 인증한다.
 1. 유저가 로그인을 시도(Http Request)
 2. AuthenticationFilter 에서부터 위와같이 user DB까지 접근
 3. DB에 존재하는 유저라면 UserDetails로 꺼내서 유저의 session 생셩
-4. Spring Security의 인메모리 세션저장소인 SecurityContextHolder에 저장
+4. Spring Security의 인메모리 세션저장소인 SecurityContextHolder에 저장(무조건 사용할 필요는 없음. 사실 분산 환경에서는 레디스 등의 장비를 사용해 대체해야함)
 5. 유저에게 session ID와 함께 응답을 내려줌
 6. 이후 요청에서는 요청쿠키에서 JSESSIONID를 보고 검증 후 유효하면 Authentication을 내려준다.
 
