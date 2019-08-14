@@ -84,8 +84,12 @@ private List<AuthenticationProvider> providers;
 ### 3-2. 리소스 가로채기 (intercept)
 권한이 있는 유저에게만 리소스를 제공하는 것도, 일단 리소스를 내가 가지고 있어야 가능하다. 보안이란 본래 권한이 없는 자들이 원천적으로 리소스에 접근할 수 없도록 막아내는 것이다. 그런 의미에서 적절한 권한을 가진자만 해당 자원에 접근할 수 있도록 자원의 외부요청을 원천적으로 가로채는 것(Intercept)은 authorization의 중요한 원칙이다.
 
+<br/> TODO: 이어서 스프링 시큐리티에서 인터셉터 역할을 하는 필터에 대해(FilterSecurityInterceptor) 정리하기
+
 > 출처: https://sjh836.tistory.com/165
 
 > 출처: https://offbyone.tistory.com/88
 
 > 출처: https://hanee24.github.io/2018/04/21/authentication-authorization/
+
+> 출처: http://blog.naver.com/PostView.nhn?blogId=tmondev&logNo=220310743818
