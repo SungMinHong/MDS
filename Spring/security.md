@@ -33,7 +33,16 @@ Spring Security는 세션-쿠키방식으로 인증한다.
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile29.uf.tistory.com%2Fimage%2F995E6F365B6B29FF0438FF)
 
 ### 2-2. security의 filter들
+- 필터를 거쳐 서블릿으로 들어가는 구조 
+<br/>
+
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile30.uf.tistory.com%2Fimage%2F993341355B6B2A0A03B982)
+
+- 더 자세한 필터 종류
+<br/>
+
+![](http://postfiles5.naver.net/20150325_212/tmondev_1427249971716oWksh_PNG/image_3_vitualfilterchain.png?type=w2)
+
 1. SecurityContextPersistenceFilter: SecurityContextRepository에서 SecurityContext를 가져오거나 저장하는 역할을 한다.
 2. LogoutFilter: 설정된 로그아웃 URL로 오는 요청을 감시하며, 해당 유저를 로그아웃 처리
 3. (UsernamePassword)AuthenticationFilter : (아이디와 비밀번호를 사용하는 form 기반 인증) 설정된 로그인 URL로 오는 요청을 감시하며, 유저 인증 처리
