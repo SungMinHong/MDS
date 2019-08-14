@@ -44,6 +44,55 @@ Spring Security는 세션-쿠키방식으로 인증한다.
 ![](http://postfiles5.naver.net/20150325_212/tmondev_1427249971716oWksh_PNG/image_3_vitualfilterchain.png?type=w2)
 
 1. SecurityContextPersistenceFilter: SecurityContextRepository에서 SecurityContext를 가져오거나 저장하는 역할을 한다.
+추가적으로 설명하면, Authentication 객체는 필터 체인 상의 최초에 위치한 SecurityContextPersistenceFilter의 session에 저장된다. 그리고 다음 접속 시에는 session에서 정보가 담긴 Authentication 객체를 가져올 수 있게 된다.
+
+~~~java
+// SecurityContextPersistenceFilter내 doFilter
+public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) res;
+
+        if (request.getAttribute(FILTER_APPLIED) != null) {
+            // ensure that filter is only applied once per request
+            chain.doFilter(request, response);
+            return;
+        }
+
+        final boolean debug = logger.isDebugEnabled();
+
+        request.setAttribute(FILTER_APPLIED, Boolean.TRUE);
+
+        if (forceEagerSessionCreation) {
+            HttpSession session = request.getSession();
+
+            if (debug && session.isNew()) {
+                logger.debug("Eagerly created session: " + session.getId());
+            }
+        }
+
+        HttpRequestResponseHolder holder = new HttpRequestResponseHolder(request, response);
+        SecurityContext contextBeforeChainExecution = repo.loadContext(holder);
+
+        try {
+            SecurityContextHolder.setContext(contextBeforeChainExecution);
+
+            chain.doFilter(holder.getRequest(), holder.getResponse());
+
+        } finally {
+            SecurityContext contextAfterChainExecution = SecurityContextHolder.getContext();
+            // Crucial removal of SecurityContextHolder contents - do this before anything else.
+            SecurityContextHolder.clearContext();
+            repo.saveContext(contextAfterChainExecution, holder.getRequest(), holder.getResponse());
+            request.removeAttribute(FILTER_APPLIED);
+
+            if (debug) {
+                logger.debug("SecurityContextHolder now cleared, as request processing completed");
+            }
+        }
+    }
+~~~
+
 2. LogoutFilter: 설정된 로그아웃 URL로 오는 요청을 감시하며, 해당 유저를 로그아웃 처리
 3. (UsernamePassword)AuthenticationFilter : (아이디와 비밀번호를 사용하는 form 기반 인증) 설정된 로그인 URL로 오는 요청을 감시하며, 유저 인증 처리
 <br/> &nbsp;  3-1. AuthenticationManager를 통한 인증 실행
