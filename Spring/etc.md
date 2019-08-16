@@ -95,3 +95,38 @@ class RandomAccessSubList<E> extends SubList<E> implements RandomAccess {
 ~~~java
  list = new ArrayList<>(list.subList(0, 2));
 ~~~
+
+- 추가적으로 Iterables.partition(final Iterable<T> iterable, final int size)도 직렬화가 필요한 경우 사용하지 말자.
+- 내부 적으로 마지막 리스트의 크기가 원하는 갯수 미만으로 떨어지는 경우 subList가 호출된다. 이로 인해 직렬화 문제가 발생한다.
+~~~ java
+  private static <T> UnmodifiableIterator<List<T>> partitionImpl(
+      final Iterator<T> iterator, final int size, final boolean pad) {
+    checkNotNull(iterator);
+    checkArgument(size > 0);
+    return new UnmodifiableIterator<List<T>>() {
+      @Override
+      public boolean hasNext() {
+        return iterator.hasNext();
+      }
+
+      @Override
+      public List<T> next() {
+        if (!hasNext()) {
+          throw new NoSuchElementException();
+        }
+        Object[] array = new Object[size];
+        int count = 0;
+        for (; count < size && iterator.hasNext(); count++) {
+          array[count] = iterator.next();
+        }
+        for (int i = count; i < size; i++) {
+          array[i] = null; // for GWT
+        }
+
+        @SuppressWarnings("unchecked") // we only put Ts in it
+        List<T> list = Collections.unmodifiableList((List<T>) Arrays.asList(array));
+        return (pad || count == size) ? list : list.subList(0, count);
+      }
+    };
+  }
+~~~
