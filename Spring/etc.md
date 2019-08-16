@@ -67,6 +67,16 @@ public class Main {
                 new SubList<>(this, fromIndex, toIndex));
     }
 ~~~
+- UnmodifiableRandomAccessList의 부모 클래스인 UnmodifiableList에 있는 list 필드에 RandomAccessSubList가 저장된 것이다. (ArrayList 생성자 처럼 생성자에 리스트를 넘긴 경우 깊은 복사를 하지 않는다.)
+~~~java
+ static class UnmodifiableList<E> extends UnmodifiableCollection<E>
+                                  implements List<E> {
+        private static final long serialVersionUID = -283967356065247728L;
+
+        final List<? extends E> list;
+        //..중략
+}
+~~~
 
 - 하지만 RandomAccessSubList에는 직렬화 인터페이스가 없다. 이로 인해 직렬화에 실패하게 된다.
 ~~~java
