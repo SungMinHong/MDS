@@ -148,8 +148,10 @@ private List<AuthenticationProvider> providers;
 
 ### 3-2. 리소스 가로채기 (intercept)
 권한이 있는 유저에게만 리소스를 제공하는 것도, 일단 리소스를 내가 가지고 있어야 가능하다. 보안이란 본래 권한이 없는 자들이 원천적으로 리소스에 접근할 수 없도록 막아내는 것이다. 그런 의미에서 적절한 권한을 가진자만 해당 자원에 접근할 수 있도록 자원의 외부요청을 원천적으로 가로채는 것(Intercept)은 authorization의 중요한 원칙이다.
+<br/>
+스프링 시큐리티에서 인터셉터 역할을 하는 필터는 FilterSecurityInterceptor이다. 스프링 시큐리티 필터 체인의 제일 마지막에 위치하고 있는 FilterSecurityInterceptor 에서 특정 요청을 받아들일지 거부할지를 결정한다. FilterSecurityInterceptor 까지 진행되었다는 것은 이미 인증이 완료되고 시스템에서 유효한 사용자라는 것을 이미 알고 있다는 것이다.
+FilterSecurityInterceptor 에서는 Authentication의 특정 메소드(Collection<GrantedAuthority> getAuthorities()) 를 통해서 얻은 권한 목록을 통해서 요청을 승인 할지, 거부할 지를 판단한다.
 
-<br/> TODO: 이어서 스프링 시큐리티에서 인터셉터 역할을 하는 필터에 대해(FilterSecurityInterceptor) 정리하기
 
 -------
 출처: https://sjh836.tistory.com/165
