@@ -7,6 +7,8 @@
 - 자바 기본(primitive) 타입과 java.io.Serializable 인터페이스를 상속받은 객체는 직렬화 할 수 있는 기본 조건을 가집니다.
 > 기본 개념 출처: http://woowabros.github.io/experience/2017/10/17/java-serialize.html
 
+## 주의할 점:
+### subList를 사용하지 말자
 - subList를 사용한 경우 
 ~~~java
 public class Main {
@@ -87,7 +89,7 @@ Exception in thread "main" java.io.NotSerializableException: java.util.RandomAcc
     }
 ~~~
 
-## 추가적으로 Iterables.partition(final Iterable<T> iterable, final int size)는 직렬화가 필요한 경우 절대 사용하면 안된다!
+### 추가적으로 Iterables.partition(final Iterable<T> iterable, final int size)는 직렬화가 필요한 경우 절대 사용하면 안된다!
 - Iterators에서 내부 적으로 마지막 리스트의 크기가 원하는 갯수 미만으로 떨어지는 경우 subList가 호출된다.
 - subList에 직렬화 인터페이스가 없어 문제가 발생하지만 별 다른 설명이 없다. 문제가 있는 자바 라이브러리라고 볼 수 있다.
 ~~~ java
