@@ -21,7 +21,10 @@ Spring MVC와 분리되어 관리 및 동작한다. (Spring MVC는 DispatcherSer
 
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile23.uf.tistory.com%2Fimage%2F99A7223C5B6B29F003F5F0)
 
-- 우선 구조는 Filter 아래 Manager 1 개가 존재한다. Manager아래 n개의 Provider가 존재한다. n 개의 Provider를 통해 권한을 발급한다.
+- n개의 Filter가 존재한다.
+- Filter 아래 Manager 1 개가 존재한다.
+- Manager아래 n'개의 Provider가 존재한다. 
+- n' 개의 Provider를 통해 권한을 발급한다.
 
 Spring Security는 세션-쿠키방식으로 인증한다.
 1. 유저가 로그인을 시도(Http Request)
