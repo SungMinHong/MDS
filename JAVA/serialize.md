@@ -10,9 +10,8 @@ public class Main {
         array[0] = "홍";
         array[0] = "성";
         array[0] = "민";
-        List<String> list =  Collections.unmodifiableList(Arrays.asList(array));
+        List<String> list =  Arrays.asList(array);
         list = list.subList(0, 2);
-        System.out.println(list.getClass());
         byte[] bytes = pickle(list);    //occur error!
     }
 
