@@ -27,7 +27,7 @@ Spring Security는 세션-쿠키방식으로 인증한다.
 3. DB에 존재하는 유저라면 UserDetails로 꺼내 유저의 session 생셩
 4. Spring Security의 인메모리 세션저장소인 SecurityContextHolder에 저장(무조건 사용할 필요는 없음. 사실 분산 환경에서는 레디스 등의 장비를 사용해 대체해야함)
 5. 유저에게 session ID와 함께 응답을 내려줌
-6. 이후 요청에서는 요청쿠키에서 JSESSIONID를 보고 검증 후 유효하면 Authentication을 내려준다.
+6. 이후 요청에서는 요청쿠키에서 JSESSIONID를 보고 검증 후 유효하면 Authentication을 내려준다. +) 단 분산환경에서는 여러 방법을 통해 세션키를 공유하던지 아예 세션을 사용하지 않고 매번 인증과 권한 발급을 해야한다. 분산 환경에서 Authentication을 어떻게 저장 할지는 차후 정리할 예정이다.
 
 아래는 로그인 성공 상황인데, 익명세션ID에서 security가 내려주는 유효한 세션ID로 뒤바뀌는 장면이다.
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile29.uf.tistory.com%2Fimage%2F995E6F365B6B29FF0438FF)
