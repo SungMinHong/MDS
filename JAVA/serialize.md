@@ -7,7 +7,6 @@
 - 자바 기본(primitive) 타입과 java.io.Serializable 인터페이스를 상속받은 객체는 직렬화 할 수 있는 기본 조건을 가집니다.
 > 기본 개념 출처: http://woowabros.github.io/experience/2017/10/17/java-serialize.html
 
-## 직렬화를 쓰는 경우 sublist()를 피해야 한다!
 - subList를 사용한 경우 
 ~~~java
 public class Main {
@@ -167,7 +166,7 @@ Exception in thread "main" java.io.NotSerializableException: java.util.RandomAcc
     }
 ~~~
 - 결과적으로 UnmodifiableRandomAccessList의 부모 클래스인 UnmodifiableList에 있는 list 필드에 RandomAccessSubList가 저장된다. 
-- 하지만 ArrayList 생성자와 다르게 UnmodifiableRandomAccessList 생성자에 리스트를 넘긴 경우 깊은 복사를 하지 않는다. 얖은복사로 단지 래핑만을 한다.
+- 하지만 ArrayList 생성자와 다르게 UnmodifiableRandomAccessList 생성자에 리스트를 넘긴 경우 깊은 복사를 하지 않는다. 얕은 복사로 단지 래핑만을 한다.
 ~~~java
  static class UnmodifiableList<E> extends UnmodifiableCollection<E>
                                   implements List<E> {
