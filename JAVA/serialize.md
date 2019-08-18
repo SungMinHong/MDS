@@ -8,8 +8,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         String[] array = new String[3];
         array[0] = "홍";
-        array[0] = "성";
-        array[0] = "민";
+        array[1] = "성";
+        array[2] = "민";
         List<String> list =  Arrays.asList(array);
         list = list.subList(0, 2);
         byte[] bytes = pickle(list);    //occur error!
