@@ -1,6 +1,4 @@
-# 자바에서 유의할 점
-
-## 직렬화가 쓰이는 경우 반드시 List 인터페이스의 sublist()를 피할 것!
+## 직렬화를 쓰는 경우 반드시 sublist()를 피할 것!
 - subList를 사용한 경우 
 ~~~java
 public class Main {
@@ -27,37 +25,6 @@ public class Main {
 }
 ~~~
 
-- Collections내 UnmodifiableRandomAccessList의 subList가 호출되고
-~~~java
-    /**
-     * @serial include
-     */
-    static class UnmodifiableRandomAccessList<E> extends UnmodifiableList<E>
-                                              implements RandomAccess
-    {
-        UnmodifiableRandomAccessList(List<? extends E> list) {
-            super(list);
-        }
-
-        public List<E> subList(int fromIndex, int toIndex) {
-            return new UnmodifiableRandomAccessList<>(
-                list.subList(fromIndex, toIndex));
-        }
-
-        private static final long serialVersionUID = -2542308836966382001L;
-
-        /**
-         * Allows instances to be deserialized in pre-1.4 JREs (which do
-         * not have UnmodifiableRandomAccessList).  UnmodifiableList has
-         * a readResolve method that inverts this transformation upon
-         * deserialization.
-         */
-        private Object writeReplace() {
-            return new UnmodifiableList<>(list);
-        }
-    }
-~~~
-
 - AbstractList내 subList를 통해 RandomAccessSubList가 생성된다.
 ~~~java
     public List<E> subList(int fromIndex, int toIndex) {
@@ -66,18 +33,8 @@ public class Main {
                 new SubList<>(this, fromIndex, toIndex));
     }
 ~~~
-- UnmodifiableRandomAccessList의 부모 클래스인 UnmodifiableList에 있는 list 필드에 RandomAccessSubList가 저장된 것이다. (ArrayList 생성자 처럼 생성자에 리스트를 넘긴 경우 깊은 복사를 하지 않는다.)
-~~~java
- static class UnmodifiableList<E> extends UnmodifiableCollection<E>
-                                  implements List<E> {
-        private static final long serialVersionUID = -283967356065247728L;
 
-        final List<? extends E> list;
-        //..중략
-}
-~~~
-
-- 하지만 RandomAccessSubList에는 직렬화 인터페이스가 없다. 이로 인해 직렬화에 실패하게 된다.
+- 하지만 RandomAccessSubList에는 직렬화 인터페이스를 구현하지 않았다.
 ~~~java
 class RandomAccessSubList<E> extends SubList<E> implements RandomAccess {
     RandomAccessSubList(AbstractList<E> list, int fromIndex, int toIndex) {
@@ -89,14 +46,42 @@ class RandomAccessSubList<E> extends SubList<E> implements RandomAccess {
     }
 }
 ~~~
+- 이로 인해 직렬화 에러가 발생하게 된다
+~~~
+Exception in thread "main" java.io.NotSerializableException: java.util.RandomAccessSubList
+~~~
 
-- 만약 subList결과를 사용해 직렬화 하라면 ArrayList로 감싸서 사용해야 한다. (깊은 복사)
+- 만약 직렬화를 할 대상 리스트가 subList 반환한 결과인 경우 ArrayList로 감싸서 사용해야 한다. (깊은 복사)
 ~~~java
  list = new ArrayList<>(list.subList(0, 2));
 ~~~
 
-- 추가적으로 Iterables.partition(final Iterable<T> iterable, final int size)도 직렬화가 필요한 경우 사용하지 말자.
-- 내부 적으로 마지막 리스트의 크기가 원하는 갯수 미만으로 떨어지는 경우 subList가 호출된다. 이로 인해 직렬화 문제가 발생한다.
+- ArrayList의 생성자에 컬렉션을 구현한 인스턴스를 넘길 경우 copyOf를 통해 깊은 복사를 한다.
+~~~java
+     /**
+     * Constructs a list containing the elements of the specified
+     * collection, in the order they are returned by the collection's
+     * iterator.
+     *
+     * @param c the collection whose elements are to be placed into this list
+     * @throws NullPointerException if the specified collection is null
+     */
+    public ArrayList(Collection<? extends E> c) {
+        elementData = c.toArray();
+        if ((size = elementData.length) != 0) {
+            // c.toArray might (incorrectly) not return Object[] (see 6260652)
+            if (elementData.getClass() != Object[].class)
+                elementData = Arrays.copyOf(elementData, size, Object[].class);
+        } else {
+            // replace with empty array.
+            this.elementData = EMPTY_ELEMENTDATA;
+        }
+    }
+~~~
+
+## 추가적으로 Iterables.partition(final Iterable<T> iterable, final int size)는 직렬화가 필요한 경우 사용하지 말자!
+- Iterators에서 내부 적으로 마지막 리스트의 크기가 원하는 갯수 미만으로 떨어지는 경우 subList가 호출된다.
+- subList에 직렬화 인터페이스가 없어 문제가 발생하지만 별 다른 설명이 없다. 문제가 있는 자바 라이브러리라고 볼 수 있다.
 ~~~ java
   // Iterators.java
   private static <T> UnmodifiableIterator<List<T>> partitionImpl(
@@ -125,8 +110,75 @@ class RandomAccessSubList<E> extends SubList<E> implements RandomAccess {
 
         @SuppressWarnings("unchecked") // we only put Ts in it
         List<T> list = Collections.unmodifiableList((List<T>) Arrays.asList(array));
-        return (pad || count == size) ? list : list.subList(0, count);
+        return (pad || count == size) ? list : list.subList(0, count);  //여기서 문제가 발생할 여지가 있다!
       }
     };
   }
+~~~
+
+- 위 list.subList(0, count)가 호출되면
+- Collections내 UnmodifiableRandomAccessList의 subList가 호출된다.
+~~~java
+    /**
+     * @serial include
+     */
+    static class UnmodifiableRandomAccessList<E> extends UnmodifiableList<E>
+                                              implements RandomAccess
+    {
+        UnmodifiableRandomAccessList(List<? extends E> list) {
+            super(list);
+        }
+
+        public List<E> subList(int fromIndex, int toIndex) {
+            return new UnmodifiableRandomAccessList<>(
+                list.subList(fromIndex, toIndex));  //여기가 실행되고
+        }
+
+        private static final long serialVersionUID = -2542308836966382001L;
+
+        /**
+         * Allows instances to be deserialized in pre-1.4 JREs (which do
+         * not have UnmodifiableRandomAccessList).  UnmodifiableList has
+         * a readResolve method that inverts this transformation upon
+         * deserialization.
+         */
+        private Object writeReplace() {
+            return new UnmodifiableList<>(list);
+        }
+    }
+~~~
+
+- AbstractList내 subList를 통해 RandomAccessSubList가 생성된다.
+- 생성된 RandomAccessSubList는 UnmodifiableRandomAccessList의 생성자로 전달된다.
+~~~java
+    public List<E> subList(int fromIndex, int toIndex) {
+        return (this instanceof RandomAccess ?
+                new RandomAccessSubList<>(this, fromIndex, toIndex) :
+                new SubList<>(this, fromIndex, toIndex));
+    }
+~~~
+- 결과적으로 UnmodifiableRandomAccessList의 부모 클래스인 UnmodifiableList에 있는 list 필드에 RandomAccessSubList가 저장된다. 
+- 하지만 ArrayList 생성자와 다르게 UnmodifiableRandomAccessList 생성자에 리스트를 넘긴 경우 깊은 복사를 하지 않는다. 얖은복사로 단지 래핑만을 한다.
+~~~java
+ static class UnmodifiableList<E> extends UnmodifiableCollection<E>
+                                  implements List<E> {
+        private static final long serialVersionUID = -283967356065247728L;
+
+        final List<? extends E> list;
+        //..중략
+}
+~~~
+
+- 마찬가지로 RandomAccessSubList에는 직렬화 인터페이스를 구현되지 않았다.
+- 이로 인해 직렬화 오류가 발생하게 된다.
+~~~java
+class RandomAccessSubList<E> extends SubList<E> implements RandomAccess {
+    RandomAccessSubList(AbstractList<E> list, int fromIndex, int toIndex) {
+        super(list, fromIndex, toIndex);
+    }
+
+    public List<E> subList(int fromIndex, int toIndex) {
+        return new RandomAccessSubList<>(this, fromIndex, toIndex);
+    }
+}
 ~~~
