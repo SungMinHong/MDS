@@ -44,7 +44,8 @@ Spring Security는 세션-쿠키방식으로 인증한다.
 ![](http://postfiles5.naver.net/20150325_212/tmondev_1427249971716oWksh_PNG/image_3_vitualfilterchain.png?type=w2)
 
 1. SecurityContextPersistenceFilter: SecurityContextRepository에서 SecurityContext를 가져오거나 저장하는 역할을 한다.
-추가적으로 설명하면, Authentication 객체는 필터 체인 상의 최초에 위치한 SecurityContextPersistenceFilter의 session에 저장된다. 그리고 다음 접속 시에는 session에서 정보가 담긴 Authentication 객체를 가져올 수 있게 된다.
+추가적으로 설명하면, Authentication 객체는 필터 체인 상의 최초에 위치한 SecurityContextPersistenceFilter의 (repo)session에 저장된다. 그리고 다음 접속 시에는 (repo)session에서 정보가 담긴 Authentication 객체를 가져올 수 있게 된다. 
++) 만약 repo가 null관련 repo라면 저장이 되지 못하고 매번 요청마다 인증을 확인하고 권한을 발급해야한다.
 
 ~~~java
 // SecurityContextPersistenceFilter내 doFilter
