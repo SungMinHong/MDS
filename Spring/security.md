@@ -9,7 +9,7 @@ Spring MVC와 분리되어 관리 및 동작한다. (Spring MVC는 DispatcherSer
 
 ### 보안 관련 용어 정리
 - 접근 주체(Principal): 보호된 대상에 접근하는 유저
-- 인증(Authentication): 현재 유저가 누구인지 확인(ex. 로그인), 애플리케이션의 작업을 수행할 수 있는 주체임을 증명
+- 인증(): 현재 유저가 누구인지 확인(ex. 로그인), 애플리케이션의 작업을 수행할 수 있는 주체임을 증명
 - 인가(Authorize): 현재 유저가 어떤 서비스, 페이지에 접근할 수 있는 권한이 있는지 검사
 - 권한(Authorization): 인증된 주체가 애플리케이션의 동작을 수행할 수 있는 권한이 있는지 검사
   - 권한 승인이 필요한 부분으로 접근하려면 인증 과정을 통해 주체가 증명 되어야만 한다
@@ -24,7 +24,7 @@ Spring MVC와 분리되어 관리 및 동작한다. (Spring MVC는 DispatcherSer
 - n개의 Filter가 존재한다
 - Filter 아래 Manager 1 개가 존재한다
 - Manager 아래 n'개의 Provider가 존재한다
-- Provider를 통해 권한을 발급한다
+- Provider를 통해 인증정보와 권한이 담긴 Authentication을 반환한다
 
 Spring Security는 세션-쿠키방식으로 인증한다.
 1. 유저가 로그인을 시도(Http Request)
