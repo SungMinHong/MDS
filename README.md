@@ -14,6 +14,7 @@
 - [abstract class & interface](https://github.com/SungMinHong/TIL/blob/master/JAVA/abstract&interface.md)
 - [data type](https://github.com/SungMinHong/TIL/blob/master/JAVA/DataType.md)
 - [JAVA9](https://github.com/SungMinHong/TIL/blob/master/JAVA/JAVA9.md)
+- [serialize](https://github.com/SungMinHong/TIL/blob/master/JAVA/serialize.md)
 
 ### [Spring](https://github.com/SungMinHong/TIL/tree/master/Spring)
 - [Spring Security](https://github.com/SungMinHong/TIL/blob/master/Spring/security.md)
