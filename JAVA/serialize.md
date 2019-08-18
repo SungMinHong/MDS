@@ -179,7 +179,7 @@ Exception in thread "main" java.io.NotSerializableException: java.util.RandomAcc
 }
 ~~~
 
-- 마찬가지로 RandomAccessSubList에는 직렬화 인터페이스를 구현되지 않았다.
+- 마찬가지로 RandomAccessSubList에는 직렬화 인터페이스가 구현되지 않았다.
 - 이로 인해 직렬화 오류가 발생하게 된다.
 ~~~java
 class RandomAccessSubList<E> extends SubList<E> implements RandomAccess {
