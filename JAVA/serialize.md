@@ -11,7 +11,7 @@
 ### subList를 사용하지 말자
 - subList를 사용한 경우 
 ~~~java
-@Test(expected = NotSerializableException.class)
+    @Test(expected = NotSerializableException.class)
     public void ArrayList_subList_테스트() throws IOException {
         List<String> list =  new ArrayList<>();
         list.add("홍");
