@@ -61,7 +61,8 @@
     }
 ~~~
 
-- AbstractList내 subList를 통해 RandomAccessSubList가 생성된다.
+- AbstractList내 subList를 통해 RandomAccessSubList 혹은 SubList가 생성된다.
+- Vector와 ArrayList는 subList메서드를 재 구현 했지만 결과적으로 반환형으로 SubList를 직접 반환하거나 랩핑해서 반환한다.
 ~~~java
     public List<E> subList(int fromIndex, int toIndex) {
         return (this instanceof RandomAccess ?
@@ -70,7 +71,7 @@
     }
 ~~~
 
-- 하지만 RandomAccessSubList에는 직렬화 인터페이스를 구현하지 않았다.
+- 하지만 RandomAccessSubList와 SubList에는 직렬화 인터페이스를 구현하지 않았다.
 ~~~java
 class RandomAccessSubList<E> extends SubList<E> implements RandomAccess {
     RandomAccessSubList(AbstractList<E> list, int fromIndex, int toIndex) {
@@ -81,18 +82,39 @@ class RandomAccessSubList<E> extends SubList<E> implements RandomAccess {
         return new RandomAccessSubList<>(this, fromIndex, toIndex);
     }
 }
+
+
+class SubList<E> extends AbstractList<E> {
+    private final AbstractList<E> l;
+    private final int offset;
+    private int size;
+
+    SubList(AbstractList<E> list, int fromIndex, int toIndex) {
+        if (fromIndex < 0)
+            throw new IndexOutOfBoundsException("fromIndex = " + fromIndex);
+        if (toIndex > list.size())
+            throw new IndexOutOfBoundsException("toIndex = " + toIndex);
+        if (fromIndex > toIndex)
+            throw new IllegalArgumentException("fromIndex(" + fromIndex +
+                                               ") > toIndex(" + toIndex + ")");
+        l = list;
+        offset = fromIndex;
+        size = toIndex - fromIndex;
+        this.modCount = l.modCount;
+        //중략...
+    }
 ~~~
-- 이로 인해 직렬화 에러가 발생하게 된다
+- 이로 인해 직렬화 에러가 발생하게 된다.
 ~~~
 Exception in thread "main" java.io.NotSerializableException: java.util.RandomAccessSubList
 ~~~
 
-- 만약 직렬화를 할 대상 리스트가 subList 반환한 결과인 경우 ArrayList로 감싸서 사용해야 한다. (깊은 복사)
+- 만약 직렬화를 할 대상 리스트가 subList 반환한 결과인 경우 ArrayList로 감싸서 사용해야 한다.
 ~~~java
  list = new ArrayList<>(list.subList(0, 2));
 ~~~
 
-- ArrayList의 생성자에 컬렉션을 구현한 인스턴스를 넘길 경우 copyOf를 통해 깊은 복사를 한다.
+- ArrayList의 생성자에 컬렉션을 구현한 인스턴스를 넘길 경우 copyOf를 통해 깊은 복사를 한다. 또한 java.io.Serializable를 implements 하고 있기 때문에 직렬화가 가능하다.
 ~~~java
      /**
      * Constructs a list containing the elements of the specified
