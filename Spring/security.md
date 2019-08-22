@@ -152,7 +152,8 @@ private List<AuthenticationProvider> providers;
 스프링 시큐리티에서 인터셉터 역할을 하는 필터는 FilterSecurityInterceptor이다. 스프링 시큐리티 필터 체인의 제일 마지막에 위치하고 있는 FilterSecurityInterceptor 에서 특정 요청을 받아들일지 거부할지를 결정한다. FilterSecurityInterceptor 까지 진행되었다는 것은 이미 인증이 완료되고 시스템에서 유효한 사용자라는 것을 이미 알고 있다는 것이다.
 FilterSecurityInterceptor 에서는 Authentication의 특정 메소드(Collection<GrantedAuthority> getAuthorities()) 를 통해서 얻은 권한 목록을 통해서 요청을 승인 할지, 거부할 지를 판단한다.
 
-
+## 4. 직접 디버깅해보기
+- TODO: 이어서 정리하기(로그인 상태, 비로그인 상태로 나누어 진행) DelegatingFilterProxy에서 부터 진행할 예정.
 -------
 출처: https://sjh836.tistory.com/165
 <br/>
