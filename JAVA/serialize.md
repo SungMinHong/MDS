@@ -51,6 +51,14 @@
         list = list.subList(0, 2);
         byte[] bytes = pickle(list);    //occur error!
     }
+    
+    private <T> byte[] pickle(T obj) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(obj);
+        oos.close();
+        return baos.toByteArray();
+    }
 ~~~
 
 - AbstractList내 subList를 통해 RandomAccessSubList가 생성된다.
