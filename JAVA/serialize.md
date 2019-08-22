@@ -11,9 +11,18 @@
 ### subList를 사용하지 말자
 - subList를 사용한 경우 
 ~~~java
-public class Main {
+@Test(expected = NotSerializableException.class)
+    public void ArrayList_subList_테스트() throws IOException {
+        List<String> list =  new ArrayList<>();
+        list.add("홍");
+        list.add("성");
+        list.add("민");
+        list = list.subList(0, 2);
+        byte[] bytes = pickle(list);    //occur error!
+    }
 
-    public static void main(String[] args) throws IOException {
+    @Test(expected = NotSerializableException.class)
+    public void Arrays_asList_subList_테스트() throws IOException {
         String[] array = new String[3];
         array[0] = "홍";
         array[1] = "성";
@@ -23,16 +32,25 @@ public class Main {
         byte[] bytes = pickle(list);    //occur error!
     }
 
-    private static <T> byte[] pickle(T obj)
-            throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(obj);
-        oos.close();
-        return baos.toByteArray();
+    @Test(expected = NotSerializableException.class)
+    public void LinkedList_subList_테스트() throws IOException {
+        List<String> list =  new LinkedList<>();
+        list.add("홍");
+        list.add("성");
+        list.add("민");
+        list = list.subList(0, 2);
+        byte[] bytes = pickle(list);    //occur error!
     }
-    
-}
+
+    @Test(expected = NotSerializableException.class)
+    public void Vector_subList_테스트() throws IOException {
+        List<String> list =  new Vector<>();
+        list.add("홍");
+        list.add("성");
+        list.add("민");
+        list = list.subList(0, 2);
+        byte[] bytes = pickle(list);    //occur error!
+    }
 ~~~
 
 - AbstractList내 subList를 통해 RandomAccessSubList가 생성된다.
