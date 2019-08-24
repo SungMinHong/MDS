@@ -162,7 +162,7 @@ web.xml에 다음과 같은 설정을 해주면 애플리케이션의 모든 요
 - SecurityContextPersistenceFilter:
 - WebAsyncManagerIntegrationFilter: OncePerRequestFilter를 상속하고 있으며 재정의 없이 OncePerRequestFilter의 doFilter를 사용한다
 - PreAuthenticatedProcessingFilter: AbstractPreAuthenticatedProcessingFilter를 상속하고 있으며 재정의 없이 AbstractPreAuthenticatedProcessingFilter의 doFilter()를 사용한다.
-  - 이후 dofilter()내 requiresAuthentication() 에서는 SecurityContextPersistenceFilter에 저장한 Authentication을 꺼내 인증이 필요한지를 판단합니다. 이후 인증이 필요없는 경우 인증로직을 타지 않고 다음 필터를 호출한다.
+  - dofilter()내 requiresAuthentication() 에서는 SecurityContextPersistenceFilter에 저장한 Authentication을 꺼내 인증이 필요한지를 판단한다. 이후 인증이 필요없는 경우 인증로직을 타지 않고 다음 필터를 호출한다.
   - 인증이 필요한 경우 doAuthenticate를 호출한다. Request에서 principal과 credentials를 찾고 PreAuthenticatedAuthenticationToken을 만든다. 이후 토큰을 ProviderManager.authenticate로 넘겨준다. 
 ~~~java
     /**
