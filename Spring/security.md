@@ -27,7 +27,7 @@ Spring MVC와 분리되어 관리 및 동작한다. (Spring MVC는 DispatcherSer
 - Provider를 통해 인증정보와 권한이 담긴 Authentication을 반환한다
 - Spring Security는 기본적으로 세션-쿠키방식으로 인증한다.
 1. 유저가 로그인을 시도(Http Request)
-2. AuthenticationFilter 에서부터 위와같이 2번(UsernamePasswordAuthenticationFilter에서만 사용)->3번->...->6번 순서로 user DB까지 접근(UserDetailsService에서 db 접근 DAO를 사용)
+2. AuthenticationFilter 에서부터 위와같이 2번(UsernamePasswordAuthenticationFilter에서만 인증이 필요한 경우만 사용)->3번->...->6번 순서로 user DB까지 접근(UserDetailsService에서 db 접근 DAO를 사용)
 3. DB에 존재하는 유저라면 UserDetails로 꺼내 유저의 session 생셩
 4. Spring Security의 인메모리 세션저장소인 SecurityContextHolder에 저장
 5. 유저에게 session ID와 함께 응답을 내려줌
