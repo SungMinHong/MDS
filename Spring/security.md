@@ -154,6 +154,35 @@ FilterSecurityInterceptor 에서는 Authentication의 특정 메소드(Collectio
 
 ## 4. 직접 디버깅해보기
 - TODO: 이어서 정리하기(로그인 상태, 비로그인 상태로 나누어 진행) DelegatingFilterProxy에서 부터 진행할 예정.
+
+- DelegatingFilterProxy(여기부터가 진짜임): DelegatingFilterProxy는 스프링 시큐리티가 모든 애플리케이션 요청을 감싸게 해서 모든 요청에 보안이 적용되게 하는 서블릿필터이다.(스프링 프레임워크에서 제공) 스프링 프레임워크 기반의 웹 애플리케이션에서 서블릿 필터 라이프 사이클과 연계해 스프링 빈 의존성을 서블릿 필터에 바인딩하는데 사용한다.
+web.xml에 다음과 같은 설정을 해주면 애플리케이션의 모든 요청을 스프링 시큐리티가 감싸서 처리할 수 있게 된다.
+- FilterChainProxy: 방화벽 관련?
+- VirtualFilterChain: FilterChainProxy 내부 클래스 , 다른 필터들을 호출할 때 계속 자신의 레퍼런스를 보내 다시 자신의 dofilter를 호출하게 한다.
+- SecurityContextPersistenceFilter:
+- WebAsyncManagerIntegrationFilter: OncePerRequestFilter를 상속하고 있으며 재정의 없이 OncePerRequestFilter의 doFilter를 사용한다
+- PreAuthenticatedProcessingFilter: AbstractPreAuthenticatedProcessingFilter를 상속하고 있으며 재정의 없이 AbstractPreAuthenticatedProcessingFilter의 doFilter()를 사용한다.
+~~~java
+    /**
+     * Try to authenticate a pre-authenticated user with Spring Security if the user has not yet been authenticated.
+     */
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("Checking secure context token: " + SecurityContextHolder.getContext().getAuthentication());
+        }
+
+        if (requiresAuthentication((HttpServletRequest) request)) {
+            doAuthenticate((HttpServletRequest) request, (HttpServletResponse) response);
+        }
+
+        chain.doFilter(request, response);
+    }
+~~~
+  - 이후 dofilter()내 requiresAuthentication() 에서는 SecurityContextPersistenceFilter에 저장한 Authentication을 꺼내 인증이 필요한지를 판단합니다. 이후 인증이 필요없는 경우 인증로직을 타지 않고 다음 필터를 호출한다.
+  - 인증이 필요한 경우 doAuthenticate를 호출한다. Request에서 principal과 credentials를 찾고 PreAuthenticatedAuthenticationToken을 만든다. 이후 토큰을 ProviderManager.authenticate로 넘겨준다. 
+
 -------
 출처: https://sjh836.tistory.com/165
 <br/>
