@@ -26,6 +26,7 @@ Spring MVC와 분리되어 관리 및 동작한다. (Spring MVC는 DispatcherSer
 - Manager 아래 n'개의 Provider가 존재한다
 - Provider를 통해 인증정보와 권한이 담긴 Authentication을 반환한다
 - Spring Security는 기본적으로 세션-쿠키방식으로 인증한다.
+
 1. 유저가 로그인을 시도(Http Request)
 2. AuthenticationFilter 에서부터 위와같이 2번(UsernamePasswordAuthenticationFilter에서만 인증이 필요한 경우만 사용)->3번->...->6번 순서로 user DB까지 접근(UserDetailsService에서 db 접근 DAO를 사용)
 3. DB에 존재하는 유저라면 UserDetails로 꺼내 유저의 session 생셩
@@ -33,7 +34,7 @@ Spring MVC와 분리되어 관리 및 동작한다. (Spring MVC는 DispatcherSer
 5. 유저에게 session ID와 함께 응답을 내려줌
 6. 이후 요청에서는 요청쿠키에서 JSESSIONID를 보고 검증 후 유효하면 Authentication을 내려 (단 분산환경에서는 여러 방법을 통해 세션정보를 공유하던지 아예 세션을 사용하지 않고 쿠키 등을 이용해 해결해야 한다. 분산 환경에서 Authentication을 어떻게 저장 할지는 차후 정리할 예정이다.)
 
-아래는 로그인 성공 상황인데, 익명세션ID에서 security가 내려주는 유효한 세션ID로 뒤바뀌는 장면이다.
+아래는 로그인 성공 상황인데, 익명세션ID에서 security가 내려주는 유효한 세션ID로 뒤 바뀌는 장면이다.
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile29.uf.tistory.com%2Fimage%2F995E6F365B6B29FF0438FF)
 
 ### 2-2. security의 filter들
@@ -153,8 +154,6 @@ private List<AuthenticationProvider> providers;
 FilterSecurityInterceptor 에서는 Authentication의 특정 메소드(Collection<GrantedAuthority> getAuthorities()) 를 통해서 얻은 권한 목록을 통해서 요청을 승인 할지, 거부할 지를 판단한다.
 
 ## 4. 직접 디버깅해보기
-- TODO: 이어서 정리하기(로그인 상태, 비로그인 상태로 나누어 진행) DelegatingFilterProxy에서 부터 진행할 예정.
-
 - DelegatingFilterProxy(여기부터가 진짜임): DelegatingFilterProxy는 스프링 시큐리티가 모든 애플리케이션 요청을 감싸게 해서 모든 요청에 보안이 적용되게 하는 서블릿필터이다.(스프링 프레임워크에서 제공) 스프링 프레임워크 기반의 웹 애플리케이션에서 서블릿 필터 라이프 사이클과 연계해 스프링 빈 의존성을 서블릿 필터에 바인딩하는데 사용한다.
 web.xml에 다음과 같은 설정을 해주면 애플리케이션의 모든 요청을 스프링 시큐리티가 감싸서 처리할 수 있게 된다.
 - FilterChainProxy: 방화벽 관련?
@@ -162,7 +161,7 @@ web.xml에 다음과 같은 설정을 해주면 애플리케이션의 모든 요
 - SecurityContextPersistenceFilter:
 - WebAsyncManagerIntegrationFilter: OncePerRequestFilter를 상속하고 있으며 재정의 없이 OncePerRequestFilter의 doFilter를 사용한다
 - PreAuthenticatedProcessingFilter: AbstractPreAuthenticatedProcessingFilter를 상속하고 있으며 재정의 없이 AbstractPreAuthenticatedProcessingFilter의 doFilter()를 사용한다.
-  - dofilter()내 requiresAuthentication() 에서는 SecurityContextPersistenceFilter에 저장한 Authentication을 꺼내 인증이 필요한지를 판단한다. 이후 인증이 필요없는 경우 인증로직을 타지 않고 다음 필터를 호출한다.
+  - dofilter()내 requiresAuthentication() 에서는 SecurityContextPersistenceFilter에 저장한 Authentication을 꺼내 인증이 필요한지를 판단한다. 이후 인증이 필요없는 경우 인증 로직을 타지 않고 다음 필터를 호출한다.
   - 인증이 필요한 경우 doAuthenticate를 호출한다. Request에서 principal과 credentials를 찾고 PreAuthenticatedAuthenticationToken을 만든다. 이후 토큰을 ProviderManager.authenticate로 넘겨준다. 
 ~~~java
     /**
@@ -182,6 +181,8 @@ web.xml에 다음과 같은 설정을 해주면 애플리케이션의 모든 요
         chain.doFilter(request, response);
     }
 ~~~
+
+- TODO: 이어서 정리하기
 
 
 -------
