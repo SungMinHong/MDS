@@ -53,54 +53,6 @@ Spring MVC와 분리되어 관리 및 동작한다. (Spring MVC는 DispatcherSer
 추가적으로 설명하면, Authentication 객체는 필터 체인 상의 최초에 위치한 SecurityContextPersistenceFilter의 (repo)session에 저장된다. 그리고 다음 접속 시에는 (repo)session에서 정보가 담긴 Authentication 객체를 가져올 수 있게 된다. 
 <br/>
 +) 만약 null관련 repo로 설정돼 있다면 저장이 되지 못하고 매번 요청마다 인증을 확인해야 한다.
-
-~~~java
-// SecurityContextPersistenceFilter내 doFilter
-public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-            throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) res;
-
-        if (request.getAttribute(FILTER_APPLIED) != null) {
-            // ensure that filter is only applied once per request
-            chain.doFilter(request, response);
-            return;
-        }
-
-        final boolean debug = logger.isDebugEnabled();
-
-        request.setAttribute(FILTER_APPLIED, Boolean.TRUE);
-
-        if (forceEagerSessionCreation) {
-            HttpSession session = request.getSession();
-
-            if (debug && session.isNew()) {
-                logger.debug("Eagerly created session: " + session.getId());
-            }
-        }
-
-        HttpRequestResponseHolder holder = new HttpRequestResponseHolder(request, response);
-        SecurityContext contextBeforeChainExecution = repo.loadContext(holder);
-
-        try {
-            SecurityContextHolder.setContext(contextBeforeChainExecution);
-
-            chain.doFilter(holder.getRequest(), holder.getResponse());
-
-        } finally {
-            SecurityContext contextAfterChainExecution = SecurityContextHolder.getContext();
-            // Crucial removal of SecurityContextHolder contents - do this before anything else.
-            SecurityContextHolder.clearContext();
-            repo.saveContext(contextAfterChainExecution, holder.getRequest(), holder.getResponse());
-            request.removeAttribute(FILTER_APPLIED);
-
-            if (debug) {
-                logger.debug("SecurityContextHolder now cleared, as request processing completed");
-            }
-        }
-    }
-~~~
-
 2. LogoutFilter: 설정된 로그아웃 URL로 오는 요청을 감시하며, 해당 유저를 로그아웃 처리
 3. (UsernamePassword)AuthenticationFilter : (아이디와 비밀번호를 사용하는 form 기반 인증) 설정된 로그인 URL로 오는 요청을 감시하며, 유저 인증 처리
 <br/> &nbsp;  3-1. AuthenticationManager를 통한 인증 실행
@@ -154,11 +106,57 @@ private List<AuthenticationProvider> providers;
 FilterSecurityInterceptor 에서는 Authentication의 특정 메소드(Collection<GrantedAuthority> getAuthorities()) 를 통해서 얻은 권한 목록을 통해서 요청을 승인 할지, 거부할 지를 판단한다.
 
 ## 4. 직접 디버깅해보기
-- DelegatingFilterProxy(여기부터가 진짜임): DelegatingFilterProxy는 스프링 시큐리티가 모든 애플리케이션 요청을 감싸게 해서 모든 요청에 보안이 적용되게 하는 서블릿필터이다.(스프링 프레임워크에서 제공) 스프링 프레임워크 기반의 웹 애플리케이션에서 서블릿 필터 라이프 사이클과 연계해 스프링 빈 의존성을 서블릿 필터에 바인딩하는데 사용한다.
-web.xml에 다음과 같은 설정을 해주면 애플리케이션의 모든 요청을 스프링 시큐리티가 감싸서 처리할 수 있게 된다.
+- DelegatingFilterProxy: 스프링 시큐리티가 모든 애플리케이션 요청을 감싸게 해서 모든 요청에 보안이 적용되게 하는 서블릿필터이다.스프링 프레임워크 기반의 웹 애플리케이션에서 서블릿 필터 라이프 사이클과 연계해 스프링 빈 의존성을 서블릿 필터에 바인딩하는데 사용한다.
 - FilterChainProxy: 방화벽 관련?
 - VirtualFilterChain: FilterChainProxy 내부 클래스 , 다른 필터들을 호출할 때 계속 자신의 레퍼런스를 보내 다시 자신의 dofilter를 호출하게 한다.
-- SecurityContextPersistenceFilter:
+- SecurityContextPersistenceFilter: 정의된 시큐리티 필터 중 가장 먼저 호출되는 필터이다. request에서 세션키를 가져와 세션저장소에 저장된 Authentication을 가져온다. 이후 다른 필터가 다 호출된 이후 Authentication이 있다면 이를 세션에 저장한다.
+~~~java
+// SecurityContextPersistenceFilter
+
+public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) res;
+
+        if (request.getAttribute(FILTER_APPLIED) != null) {
+            // ensure that filter is only applied once per request
+            chain.doFilter(request, response);
+            return;
+        }
+
+        final boolean debug = logger.isDebugEnabled();
+
+        request.setAttribute(FILTER_APPLIED, Boolean.TRUE);
+
+        if (forceEagerSessionCreation) {
+            HttpSession session = request.getSession();
+
+            if (debug && session.isNew()) {
+                logger.debug("Eagerly created session: " + session.getId());
+            }
+        }
+
+        HttpRequestResponseHolder holder = new HttpRequestResponseHolder(request, response);
+        SecurityContext contextBeforeChainExecution = repo.loadContext(holder);
+
+        try {
+            SecurityContextHolder.setContext(contextBeforeChainExecution);
+
+            chain.doFilter(holder.getRequest(), holder.getResponse());
+
+        } finally {
+            SecurityContext contextAfterChainExecution = SecurityContextHolder.getContext();
+            // Crucial removal of SecurityContextHolder contents - do this before anything else.
+            SecurityContextHolder.clearContext();
+            repo.saveContext(contextAfterChainExecution, holder.getRequest(), holder.getResponse());
+            request.removeAttribute(FILTER_APPLIED);
+
+            if (debug) {
+                logger.debug("SecurityContextHolder now cleared, as request processing completed");
+            }
+        }
+    }
+~~~
 - WebAsyncManagerIntegrationFilter: OncePerRequestFilter를 상속하고 있으며 재정의 없이 OncePerRequestFilter의 doFilter를 사용한다
 - PreAuthenticatedProcessingFilter: AbstractPreAuthenticatedProcessingFilter를 상속하고 있으며 재정의 없이 AbstractPreAuthenticatedProcessingFilter의 doFilter()를 사용한다.
   - dofilter()내 requiresAuthentication() 에서는 SecurityContextPersistenceFilter에 저장한 Authentication을 꺼내 인증이 필요한지를 판단한다. 이후 인증이 필요없는 경우 인증 로직을 타지 않고 다음 필터를 호출한다.
