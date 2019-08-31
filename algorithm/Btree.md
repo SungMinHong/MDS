@@ -10,3 +10,5 @@
 ## B-Tree
 
 ## B+ Tree
+
+> 출처: [BITcampus.com](https://www.youtube.com/watch?v=WBqKyrL6u-Q)
