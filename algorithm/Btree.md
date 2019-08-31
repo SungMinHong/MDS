@@ -4,7 +4,7 @@
 - 트리의 좌우 균형이 맞지 않으면 비효율적이다
 ### Balncde Tree
 - 삽입과 삭제시 필요하면 스스로 균형을 유지한다
-- AVL Tree, 2-3 Tree, 2-3-4 Tree, Red-Black Tree, B-tree 등등을 이용해서 균형을 유지함
+- AVL Tree, 2-3 Tree, 2-3-4 Tree, Red-Black Tree, B-tree 등등이 균형을 유지하는 Tree임
 - 항상 O(logN)의 검색성능
 - 아래 그림과 같이 AVL트리에서는 회전을 이용해 균형 트리를 만들 수 있다. (C를 위로 올리며 회전)
 ![비균형 트리에서 회전을 이용해 균형 트리로 만든 예시](https://user-images.githubusercontent.com/18229419/64060187-4325d880-cc04-11e9-82f2-7f8a70da6398.png)
