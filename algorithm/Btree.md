@@ -1,4 +1,4 @@
-# RDB 관련 알고리즘
+# 트리 알고리즘
 
 ## Balanced Tree
 
