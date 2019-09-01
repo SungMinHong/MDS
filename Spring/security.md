@@ -105,7 +105,7 @@ private List<AuthenticationProvider> providers;
 스프링 시큐리티에서 인터셉터 역할을 하는 필터는 FilterSecurityInterceptor이다. 스프링 시큐리티 필터 체인의 제일 마지막에 위치하고 있는 FilterSecurityInterceptor 에서 특정 요청을 받아들일지 거부할지를 결정한다. FilterSecurityInterceptor 까지 진행되었다는 것은 이미 인증이 완료되고 시스템에서 유효한 사용자라는 것을 이미 알고 있다는 것이다.
 FilterSecurityInterceptor 에서는 Authentication의 특정 메소드(Collection<GrantedAuthority> getAuthorities()) 를 통해서 얻은 권한 목록을 통해서 요청을 승인 할지, 거부할 지를 판단한다.
 
-## 4. 직접 디버깅해보기
+## 4. 직접 디버깅해보며 정리..
 - DelegatingFilterProxy: 스프링 시큐리티가 모든 애플리케이션 요청을 감싸게 해서 모든 요청에 보안이 적용되게 하는 서블릿필터이다.스프링 프레임워크 기반의 웹 애플리케이션에서 서블릿 필터 라이프 사이클과 연계해 스프링 빈 의존성을 서블릿 필터에 바인딩하는데 사용한다.
 - FilterChainProxy: 방화벽 관련? (추후 필요시 더 정리)
 - VirtualFilterChain: FilterChainProxy 내부 클래스 , 다른 필터들을 호출할 때 계속 자신의 레퍼런스를 보내 다시 자신의 dofilter를 호출하게 한다.
@@ -158,9 +158,8 @@ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
     }
 ~~~
 - WebAsyncManagerIntegrationFilter: (추후 필요시 더 정리)
-- PreAuthenticatedProcessingFilter: AbstractPreAuthenticatedProcessingFilter를 상속하고 있으며 재정의 없이 AbstractPreAuthenticatedProcessingFilter의 doFilter()를 사용한다.
+- AbstractPreAuthenticatedProcessingFilter를 상속한 필터
   - dofilter()내 requiresAuthentication() 에서는 SecurityContextPersistenceFilter에 저장한 Authentication을 꺼내 인증이 필요한지를 판단한다. 이후 인증이 필요없는 경우 인증 로직을 타지 않고 다음 필터를 호출한다.
-  - 인증이 필요한 경우 doAuthenticate를 호출한다. Request에서 principal과 credentials를 찾고 PreAuthenticatedAuthenticationToken을 만든다. 이후 토큰을 ProviderManager.authenticate로 넘겨준다. 
 ~~~java
     /**
      * Try to authenticate a pre-authenticated user with Spring Security if the user has not yet been authenticated.
@@ -179,8 +178,11 @@ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
         chain.doFilter(request, response);
     }
 ~~~
+  - 인증이 필요한 경우 doAuthenticate를 호출한다. Request에서 principal과 credentials를 찾고 PreAuthenticatedAuthenticationToken을 만든다. 이후 토큰을 ProviderManager.authenticate로 넘겨준다.
+  - Provider에서 관련 service를 호출해 인증하고 권한을 발급한다.
+  - 만약 쿠키를 이용한 인증을 한다면 여기서 쿠키 핸들러를 통해 Principal을 확인하는 것을 추천한다.
 
-- TODO: 이어서 정리하기
++) TODO: 시큐리티 관련 설정 방법을 정리하고 예제 웹페이지 만들어보기 
 
 
 -------
