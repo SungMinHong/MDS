@@ -159,11 +159,13 @@ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 ~~~
 - WebAsyncManagerIntegrationFilter: (추후 필요시 더 정리)
 - AbstractPreAuthenticatedProcessingFilter를 상속한 필터:
-  - dofilter()내 requiresAuthentication() 에서는 SecurityContextPersistenceFilter에 저장한 Authentication을 꺼내 인증이 필요한지를 판단한다. 이후 인증이 필요없는 경우 인증 로직을 타지 않고 다음 필터를 호출한다.(아래 소스코드 참조)
+  - dofilter()내 requiresAuthentication() 에서는 SecurityContextPersistenceFilter에 저장한 Authentication을 꺼내 인증이 필요한지를 판단한다. 이후 인증이 필요없는 경우 인증 로직을 타지 않고 다음 필터를 호출한다.(아래 1번 소스코드 참조)
   - 인증이 필요한 경우 doAuthenticate를 호출한다. Request에서 principal과 credentials를 찾고 PreAuthenticatedAuthenticationToken을 만든다. 이후 토큰을 ProviderManager.authenticate로 넘겨준다.
-  - Provider에서 관련 service를 호출해 인증하고 권한을 발급한다.
-  - 만약 쿠키를 이용한 인증을 한다면 여기서 쿠키 핸들러를 통해 Principal을 확인하는 것을 추천한다.
+  - 토큰을 Provider로 넘기고 관련 service를 호출해 인증하고 권한을 발급한다. (user의 detail정보도 채워준다.)
+  - 필터의 인증 중 문제가 발생하지 않은 경우 successfulAuthentication()이 호출되고 Holder에 Authentication을 저장한다. (아래 2번 소스코드 참조)
+  - 만약 쿠키를 이용한 인증을 한다면 여기서 쿠키 핸들러를 통해 Principal을 확인하는 것을 추천.
 ~~~java
+    //1번 소스코드
     /**
      * Try to authenticate a pre-authenticated user with Spring Security if the user has not yet been authenticated.
      */
@@ -179,6 +181,24 @@ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
         }
 
         chain.doFilter(request, response);
+    }
+~~~
+
+~~~java
+    //2번 소스코드
+    /**
+     * Puts the <code>Authentication</code> instance returned by the
+     * authentication manager into the secure context.
+     */
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, Authentication authResult) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Authentication success: " + authResult);
+        }
+        SecurityContextHolder.getContext().setAuthentication(authResult);
+        // Fire event
+        if (this.eventPublisher != null) {
+            eventPublisher.publishEvent(new InteractiveAuthenticationSuccessEvent(authResult, this.getClass()));
+        }
     }
 ~~~
 
