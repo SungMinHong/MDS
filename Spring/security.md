@@ -158,8 +158,11 @@ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
     }
 ~~~
 - WebAsyncManagerIntegrationFilter: (추후 필요시 더 정리)
-- AbstractPreAuthenticatedProcessingFilter를 상속한 필터
-  - dofilter()내 requiresAuthentication() 에서는 SecurityContextPersistenceFilter에 저장한 Authentication을 꺼내 인증이 필요한지를 판단한다. 이후 인증이 필요없는 경우 인증 로직을 타지 않고 다음 필터를 호출한다.
+- AbstractPreAuthenticatedProcessingFilter를 상속한 필터:
+  - dofilter()내 requiresAuthentication() 에서는 SecurityContextPersistenceFilter에 저장한 Authentication을 꺼내 인증이 필요한지를 판단한다. 이후 인증이 필요없는 경우 인증 로직을 타지 않고 다음 필터를 호출한다.(아래 소스코드 참조)
+  - 인증이 필요한 경우 doAuthenticate를 호출한다. Request에서 principal과 credentials를 찾고 PreAuthenticatedAuthenticationToken을 만든다. 이후 토큰을 ProviderManager.authenticate로 넘겨준다.
+  - Provider에서 관련 service를 호출해 인증하고 권한을 발급한다.
+  - 만약 쿠키를 이용한 인증을 한다면 여기서 쿠키 핸들러를 통해 Principal을 확인하는 것을 추천한다.
 ~~~java
     /**
      * Try to authenticate a pre-authenticated user with Spring Security if the user has not yet been authenticated.
@@ -178,9 +181,6 @@ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
         chain.doFilter(request, response);
     }
 ~~~
-  - 인증이 필요한 경우 doAuthenticate를 호출한다. Request에서 principal과 credentials를 찾고 PreAuthenticatedAuthenticationToken을 만든다. 이후 토큰을 ProviderManager.authenticate로 넘겨준다.
-  - Provider에서 관련 service를 호출해 인증하고 권한을 발급한다.
-  - 만약 쿠키를 이용한 인증을 한다면 여기서 쿠키 핸들러를 통해 Principal을 확인하는 것을 추천한다.
 
 +) TODO: 시큐리티 관련 설정 방법을 정리하고 예제 웹페이지 만들어보기 
 
