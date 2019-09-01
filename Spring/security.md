@@ -47,25 +47,23 @@ Spring MVC와 분리되어 관리 및 동작한다. (Spring MVC는 DispatcherSer
 <br/>
 
 ![](http://postfiles5.naver.net/20150325_212/tmondev_1427249971716oWksh_PNG/image_3_vitualfilterchain.png?type=w2)
-
-+)디버깅은 DelegatingFilterProxy내 VirtualFilterChain부터 시작하는걸 추천.
-1. SecurityContextPersistenceFilter: SecurityContextRepository에서 SecurityContext를 가져오거나 저장하는 역할을 한다.
-추가적으로 설명하면, Authentication 객체는 필터 체인 상의 최초에 위치한 SecurityContextPersistenceFilter의 (repo)session에 저장된다. 그리고 다음 접속 시에는 (repo)session에서 정보가 담긴 Authentication 객체를 가져올 수 있게 된다. 
 <br/>
-+) 만약 null관련 repo로 설정돼 있다면 저장이 되지 못하고 매번 요청마다 인증을 확인해야 한다.
-2. LogoutFilter: 설정된 로그아웃 URL로 오는 요청을 감시하며, 해당 유저를 로그아웃 처리
-3. (UsernamePassword)AuthenticationFilter : (아이디와 비밀번호를 사용하는 form 기반 인증) 설정된 로그인 URL로 오는 요청을 감시하며, 유저 인증 처리
-<br/> &nbsp;  3-1. AuthenticationManager를 통한 인증 실행
-<br/> &nbsp;  3-2. 인증 성공 시, 얻은 Authentication 객체를 SecurityContext에 저장 후 AuthenticationSuccessHandler 실행
-<br/> &nbsp;  3-3. 인증 실패 시, AuthenticationFailureHandler 실행
-4. DefaultLoginPageGeneratingFilter : 인증을 위한 로그인폼 URL을 감시한다.
-5. BasicAuthenticationFilter : HTTP 기본 인증 헤더를 감시하여 처리한다.
-6. RequestCacheAwareFilter : 로그인 성공 후, 원래 요청 정보를 재구성하기 위해 사용된다.
-7. SecurityContextHolderAwareRequestFilter : HttpServletRequestWrapper를 상속한 SecurityContextHolderAwareRequestWapper 클래스로 HttpServletRequest 정보를 감싼다. SecurityContextHolderAwareRequestWrapper 클래스는 필터 체인상의 다음 필터들에게 부가정보를 제공한다.
-8. AnonymousAuthenticationFilter : 이 필터가 호출되는 시점까지 사용자 정보가 인증되지 않았다면 인증토큰에 사용자가 익명 사용자로 나타난다.
-9. SessionManagementFilter : 이 필터는 인증된 사용자와 관련된 모든 세션을 추적한다.
-10. ExceptionTranslationFilter : 이 필터는 보호된 요청을 처리하는 중에 발생할 수 있는 예외를 위임하거나 전달하는 역할을 한다.
-11. FilterSecurityInterceptor : 이 필터는 AccessDecisionManager 로 권한부여 처리를 위임함으로써 접근 제어 결정을 쉽게해준다.
+
+- SecurityContextPersistenceFilter: SecurityContextRepository에서 SecurityContext를 가져오거나 저장하는 역할을 한다. 추가적으로 설명하면, Authentication 객체는 필터 체인 상의 최초에 위치한 SecurityContextPersistenceFilter의 (repo)session에 저장된다. 그리고 다음 접속 시에는 (repo)session에서 정보가 담긴 Authentication 객체를 가져올 수 있게 된다. 만약 NullSecurityContextRepository라면 세션저장소에 저장이 되지 못하고 매번 요청마다 인증을 확인해야 한다.
+- LogoutFilter: 설정된 로그아웃 URL로 오는 요청을 감시하며, 해당 유저를 로그아웃 처리
+
+- (UsernamePassword)AuthenticationFilter : (아이디와 비밀번호를 사용하는 form 기반 인증) 설정된 로그인 URL로 오는 요청을 감시하며, 유저 인증 처리
+  - AuthenticationManager를 통한 인증 실행
+  - 인증 성공 시, 얻은 Authentication 객체를 SecurityContext에 저장 후 AuthenticationSuccessHandler 실행
+  - 인증 실패 시, AuthenticationFailureHandler 실행
+- DefaultLoginPageGeneratingFilter : 인증을 위한 로그인폼 URL을 감시한다.
+- BasicAuthenticationFilter : HTTP 기본 인증 헤더를 감시하여 처리한다.
+- RequestCacheAwareFilter : 로그인 성공 후, 원래 요청 정보를 재구성하기 위해 사용된다.
+- SecurityContextHolderAwareRequestFilter : HttpServletRequestWrapper를 상속한 SecurityContextHolderAwareRequestWapper 클래스로 HttpServletRequest 정보를 감싼다. SecurityContextHolderAwareRequestWrapper 클래스는 필터 체인상의 다음 필터들에게 부가정보를 제공한다.
+- AnonymousAuthenticationFilter : 이 필터가 호출되는 시점까지 사용자 정보가 인증되지 않았다면 인증토큰에 사용자가 익명 사용자로 나타난다.
+- SessionManagementFilter : 이 필터는 인증된 사용자와 관련된 모든 세션을 추적한다.
+- ExceptionTranslationFilter : 이 필터는 보호된 요청을 처리하는 중에 발생할 수 있는 예외를 위임하거나 전달하는 역할을 한다.
+- FilterSecurityInterceptor : 이 필터는 AccessDecisionManager 로 권한부여 처리를 위임함으로써 접근 제어 결정을 쉽게해준다.
 
 ### 2-3. Authentication
 모든 접근 주체(=유저) 는 Authentication 를 생성한다. 
