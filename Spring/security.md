@@ -161,6 +161,7 @@ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
   - 인증이 필요한 경우 doAuthenticate를 호출한다. Request에서 principal과 credentials를 찾고 PreAuthenticatedAuthenticationToken을 만든다. 이후 토큰을 ProviderManager.authenticate로 넘겨준다.
   - 토큰을 Provider로 넘기고 관련 service를 호출해 인증하고 권한을 발급한다. (user의 detail정보도 채워준다.)
   - 필터의 인증 중 문제가 발생하지 않은 경우 successfulAuthentication()이 호출되고 Holder에 Authentication을 저장한다. (아래 2번 소스코드 참조)
+  - 이벤트 퍼블리셔를 통해 성공했는지 실패했는지 등을 알림. 해당 이벤트를 처리하는 핸들러가 처리하기 위해. 쿠키를 통한 인증을 할 경우 이벤트 헨들러를 통해 쿠키를 구워 줄 수 있다.
   - 만약 쿠키를 이용한 인증을 한다면 여기서 쿠키 핸들러를 통해 Principal을 확인하는 것을 추천.
 ~~~java
     //1번 소스코드
@@ -199,6 +200,7 @@ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
         }
     }
 ~~~
+- SecurityContextHolderAwareRequestFilter
 
 +) TODO: 시큐리티 관련 설정 방법을 정리하고 예제 웹페이지 만들어보기 
 
