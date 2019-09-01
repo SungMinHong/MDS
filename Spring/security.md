@@ -208,8 +208,99 @@ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
     - HttpServletRequest.logout() - Allows the user to logout using the LogoutHandlers configured in Spring Security. 참조 [setLogoutHandlers(List)](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/servletapi/SecurityContextHolderAwareRequestFilter.html#setLogoutHandlers-java.util.List-).
     - AsyncContext.start(Runnable) - Automatically copy the SecurityContext from the SecurityContextHolder found on the Thread that invoked AsyncContext.start(Runnable) to the Thread that processes the Runnable.
 
-+) TODO: 시큐리티 관련 설정 방법을 정리하고 예제 웹페이지 만들어보기 
+- AnonymousAuthenticationFilter: 이 필터가 호출되는 시점까지 사용자 정보가 인증되지 않았다면 인증토큰에 사용자가 익명 사용자로 나타난다.
+~~~java
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
 
+        if (applyAnonymousForThisRequest((HttpServletRequest) req)) {
+            if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                SecurityContextHolder.getContext().setAuthentication(createAuthentication((HttpServletRequest) req));
+
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Populated SecurityContextHolder with anonymous token: '"
+                        + SecurityContextHolder.getContext().getAuthentication() + "'");
+                }
+            } else {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("SecurityContextHolder not populated with anonymous token, as it already contained: '"
+                        + SecurityContextHolder.getContext().getAuthentication() + "'");
+                }
+            }
+        }
+
+        chain.doFilter(req, res);
+    }
+~~~
+- ExceptionTranslationFilter: 이 필터는 보호된 요청을 처리하는 동안 발생할 수 있는 기대한 예외의 기본 라우팅과 위임을 처리함. try문에서 바로 다음 필터를 호출함. 예외 처리를 위해 IOException, Exception을 잡는 catch문을 만듬.
+~~~java
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) res;
+
+        try {
+            chain.doFilter(request, response);
+
+            logger.debug("Chain processed normally");
+        }
+        catch (IOException ex) {
+            throw ex;
+        }
+        catch (Exception ex) {
+            // Try to extract a SpringSecurityException from the stacktrace
+            Throwable[] causeChain = throwableAnalyzer.determineCauseChain(ex);
+            RuntimeException ase = (AuthenticationException)
+                    throwableAnalyzer.getFirstThrowableOfType(AuthenticationException.class, causeChain);
+
+            if (ase == null) {
+                ase = (AccessDeniedException)throwableAnalyzer.getFirstThrowableOfType(AccessDeniedException.class, causeChain);
+            }
+
+            if (ase != null) {
+                handleSpringSecurityException(request, response, chain, ase);
+            } else {
+                // Rethrow ServletExceptions and RuntimeExceptions as-is
+                if (ex instanceof ServletException) {
+                    throw (ServletException) ex;
+                }
+                else if (ex instanceof RuntimeException) {
+                    throw (RuntimeException) ex;
+                }
+
+                // Wrap other Exceptions. This shouldn't actually happen
+                // as we've already covered all the possibilities for doFilter
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+~~~
+
+- FilterSecurityInterceptor: 이 필터는 권한부여와 관련한 결정을 AccessDecisionManager에게 위임해 권한부여 결정 및 접근 제어 결정을 쉽게 만들어 준다. FilterSecurityInterceptor 까지 진행되었다는 것은 이미 인증이 완료되고 시스템에서 유효한 사용자라고 판단했다는 것 이다. FilterSecurityInterceptor 에서는 Authentication의 특정 메소드(Collection<GrantedAuthority> getAuthorities()) 를 통해서 얻은 권한 목록을 통해서 요청을 승인 할지, 거부할 지를 판단한다. 아래 그림은 클래스 관계와 작업 순서를 결합한 그림이다. 가장 기본이 되는 접근 결정 관리자(AffirmativeBased - 1개만 승인해도 통과)와 보터(RoleVoter – 권한이 ‘ROLE_’ 로 시작하는 권한을 판단) 를 예로 들어본다.
+
+ ![FilterSecurityInterceptor](http://postfiles13.naver.net/20150325_76/tmondev_1427250864597o97Js_JPEG/%B1%C7%C7%D1%BA%CE%BF%A9.jpg?type=w2)
+
+위 그림에서 설명한 접근을 결정하는 AccessDecisionManager의 구현 클래스를 조금 자세히 설명하면 아래와 같다. 물론 사용자가 직접 구현하여 DI하는 것도 가능하다. 스프링 시큐리티에서는 3개의 기본 구현 클래스를 제공합니다
+
+1. AffirmativeBased: 보터가 접근을 승인하면 이전에 거부된 내용과 상관없이 접근이 승인
+2. ConsensusBased: 다수 표가 결정에 영향
+3. UnanimousBased: 모든 보터가 만장일치로 접근을 승인해야 함
+
+각 클래스의 정책 구현은 decide() 메소드를 각각 override 해서 기능을 지원한다. AccessDecisionManager는 여러 개의 보터들을 가지고 있다. 보터(voter)는 관리자가 설정한 리소스에 대한 접근 권한과 사용자가 가진 authority (Authentication의 getAuthorities() 로 획득)들을 비교하여 접근 가능 여부 (ACCESS_GRANTED, ACCESS_DENIED, ACCESS_ABSTAIN)를 결정하는 객체이다.
+
+AccessDecisionVoter 인터페이스에 정의된 접근 가능 여부에 대한 상수들을 조금 자세히 설명하면 아래와 같다.
+1. ACCESS_GRANTED (승인): 리소스에 대한 접근 권한을 줄 것을 권장
+2. ACCESS_DENIED (거부): 리소스에 대한 접근 권한을 거부할 것을 권장
+3. ACCESS_ABSTAIN (보류): 의사 결정을 내리지 않음
+
+FilterSecurityInterceptor의 doFilter() 내용을 간단히 정리하면 아래와 같다.
+
+1. 사용자가 접근 권한을 설정한 ConfigAttribute(url에 대한 접근 권한) 들을 가져와서 AccessDecisionManager 에 설정된 voter 들에서 지원하는지 여부를 확인한다. 만약 지원하지 않으면 예외를 발생시킨다.
+2. SecurityContextHolder.getContext().getAuthentication() 를 통해 Authentication 객체를 가져와서 AccessDecisionManager의 decide() 를 호출한다.
+3. AccessDecisionManager 를 구현한 클래스에서는 자신들이 가지고 있는 voter 들을 순환하면서 vote() 를 호출하여 ACCESS_XXX 하는 결과 값을 받아 판단한다. 권한이 없는 경우에는 AccessDeniedException 을 발생 시킨다.
+
+
++) TODO: 시큐리티 관련 설정 방법을 정리하고 예제 웹페이지 만들어보기 
 
 -------
 출처: https://sjh836.tistory.com/165
