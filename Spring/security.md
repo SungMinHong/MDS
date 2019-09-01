@@ -279,9 +279,10 @@ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 - FilterSecurityInterceptor: 이 필터는 권한부여와 관련한 결정을 AccessDecisionManager에게 위임해 권한부여 결정 및 접근 제어 결정을 쉽게 만들어 준다. FilterSecurityInterceptor 까지 진행되었다는 것은 이미 인증이 완료되고 시스템에서 유효한 사용자라고 판단했다는 것 이다. FilterSecurityInterceptor 에서는 Authentication의 특정 메소드(Collection<GrantedAuthority> getAuthorities()) 를 통해서 얻은 권한 목록을 통해서 요청을 승인 할지, 거부할 지를 판단한다. 아래 그림은 클래스 관계와 작업 순서를 결합한 그림이다. 가장 기본이 되는 접근 결정 관리자(AffirmativeBased - 1개만 승인해도 통과)와 보터(RoleVoter – 권한이 ‘ROLE_’ 로 시작하는 권한을 판단) 를 예로 들어본다.
 
  ![FilterSecurityInterceptor](http://postfiles13.naver.net/20150325_76/tmondev_1427250864597o97Js_JPEG/%B1%C7%C7%D1%BA%CE%BF%A9.jpg?type=w2)
- 
+ <br/>
  [크게보기](http://blog.naver.com/storyphoto/viewer.jsp?src=http%3A%2F%2Fblogfiles.naver.net%2F20150325_76%2Ftmondev_1427250864597o97Js_JPEG%2F%25B1%25C7%25C7%25D1%25BA%25CE%25BF%25A9.jpg)
-위 그림에서 설명한 접근을 결정하는 AccessDecisionManager의 구현 클래스를 조금 자세히 설명하면 아래와 같다. 물론 사용자가 직접 구현하여 DI하는 것도 가능하다. 스프링 시큐리티에서는 3개의 기본 구현 클래스를 제공합니다
+ <br/>
+위 그림에서 설명한 접근을 결정하는 AccessDecisionManager의 구현 클래스를 조금 자세히 설명하면 아래와 같다. 물론 사용자가 직접 구현하여 DI하는 것도 가능하다. 스프링 시큐리티에서는 3개의 기본 구현 클래스를 제공한다.
 
 1. AffirmativeBased: 보터가 접근을 승인하면 이전에 거부된 내용과 상관없이 접근이 승인
 2. ConsensusBased: 다수 표가 결정에 영향
