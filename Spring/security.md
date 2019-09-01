@@ -200,7 +200,13 @@ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
         }
     }
 ~~~
-- SecurityContextHolderAwareRequestFilter
+- SecurityContextHolderAwareRequestFilter: (발번역) ServletRequest를 서블릿 API 보안 메소드를 구현하는 request 랩퍼로 채우는 필터이다. 
+  - 서블릿 3환경에서 사용된 랩퍼클래스는 SecurityContextHolderAwareRequestWrapper 이다. 
+  - 서블릿 3 환경에서 SecurityContextHolderAwareRequestWrapper는 다음과 같은 추가 메소드를 제공하도록 확장됐다.
+    - HttpServletRequest.authenticate(HttpServletResponse) - Allows the user to determine if they are authenticated and if not send the user to the login page. 참조 [setAuthenticationEntryPoint(AuthenticationEntryPoint)](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/servletapi/SecurityContextHolderAwareRequestFilter.html#setAuthenticationEntryPoint-org.springframework.security.web.AuthenticationEntryPoint-).
+    - HttpServletRequest.login(String, String) - Allows the user to authenticate using the AuthenticationManager. 참조 [setAuthenticationManager(AuthenticationManager)](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/servletapi/SecurityContextHolderAwareRequestFilter.html#setAuthenticationManager-org.springframework.security.authentication.AuthenticationManager-).
+    - HttpServletRequest.logout() - Allows the user to logout using the LogoutHandlers configured in Spring Security. 참조 [setLogoutHandlers(List)](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/servletapi/SecurityContextHolderAwareRequestFilter.html#setLogoutHandlers-java.util.List-).
+    - AsyncContext.start(Runnable) - Automatically copy the SecurityContext from the SecurityContextHolder found on the Thread that invoked AsyncContext.start(Runnable) to the Thread that processes the Runnable.
 
 +) TODO: 시큐리티 관련 설정 방법을 정리하고 예제 웹페이지 만들어보기 
 
@@ -213,3 +219,5 @@ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 출처: https://hanee24.github.io/2018/04/21/authentication-authorization/
 <br/>
 출처: http://blog.naver.com/PostView.nhn?blogId=tmondev&logNo=220310743818
+<br/>
+출처: https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/servletapi/SecurityContextHolderAwareRequestFilter.html
