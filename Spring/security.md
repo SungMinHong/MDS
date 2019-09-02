@@ -200,7 +200,7 @@ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
         }
     }
 ~~~
-- SecurityContextHolderAwareRequestFilter: (발번역) ServletRequest를 서블릿 API 보안 메소드를 구현하는 request 랩퍼로 채우는 필터이다. 
+- SecurityContextHolderAwareRequestFilter: (발 번역) ServletRequest를 서블릿 API 보안 메소드를 구현하는 request 랩퍼로 채우는 필터이다. 
   - 서블릿 3환경에서 사용된 랩퍼클래스는 SecurityContextHolderAwareRequestWrapper 이다. 
   - 서블릿 3 환경에서 SecurityContextHolderAwareRequestWrapper는 다음과 같은 추가 메소드를 제공하도록 확장됐다.
     - HttpServletRequest.authenticate(HttpServletResponse) - Allows the user to determine if they are authenticated and if not send the user to the login page. 참조 [setAuthenticationEntryPoint(AuthenticationEntryPoint)](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/servletapi/SecurityContextHolderAwareRequestFilter.html#setAuthenticationEntryPoint-org.springframework.security.web.AuthenticationEntryPoint-).
@@ -301,7 +301,51 @@ FilterSecurityInterceptor의 doFilter() 내용을 간단히 정리하면 아래�
 2. SecurityContextHolder.getContext().getAuthentication() 를 통해 Authentication 객체를 가져와서 AccessDecisionManager의 decide() 를 호출한다.
 3. AccessDecisionManager 를 구현한 클래스에서는 자신들이 가지고 있는 voter 들을 순환하면서 vote() 를 호출하여 ACCESS_XXX 하는 결과 값을 받아 판단한다. 권한이 없는 경우에는 AccessDeniedException 을 발생 시킨다.
 
+Q. SecurityContextHolder를 static으로 사용하는데 어떻게 필터에서 필요한 SecurityContext를 찾을 수 있을까?
+<br/>
+A. 내부적으로 전략패턴을 통해 만들어진 SecurityContextHolderStrategy가 3개 있고 그 중 디폴트인 ThreadLocalSecurityContextHolderStrategy을 보면 답을 얻을 수 있다. 또한 그 안을 보면 ThreadLocal을 쓰고 있는데 이 클래스를 사용하면 쓰레드를 기준으로 저장된 변수를 가져올 수 있다. ThreadLocal<SecurityContext> contextHolder를 사용해 쓰레드별로 SecurityContext값을 저장하고 가져오고 삭제할 수 있다. 단 쓰레드 별로 관리되는 변수 이기 때문에 사용 후 반드시 remove를 해줘야 한다. 실제로 SecurityContextPersistenceFilter에서 SecurityContextHolder.clearContext()를 통해 remove()를 호출해 쓰레드 변수를 삭제해 준다.
+  
+~~~java
+/**
+ * A <code>ThreadLocal</code>-based implementation of {@link SecurityContextHolderStrategy}.
+ *
+ * @author Ben Alex
+ *
+ * @see java.lang.ThreadLocal
+ * @see org.springframework.security.core.context.web.SecurityContextPersistenceFilter
+ */
+final class ThreadLocalSecurityContextHolderStrategy implements SecurityContextHolderStrategy {
+    //~ Static fields/initializers =====================================================================================
 
+    private static final ThreadLocal<SecurityContext> contextHolder = new ThreadLocal<SecurityContext>();
+
+    //~ Methods ========================================================================================================
+
+    public void clearContext() {
+        contextHolder.remove();
+    }
+
+    public SecurityContext getContext() {
+        SecurityContext ctx = contextHolder.get();
+
+        if (ctx == null) {
+            ctx = createEmptyContext();
+            contextHolder.set(ctx);
+        }
+
+        return ctx;
+    }
+
+    public void setContext(SecurityContext context) {
+        Assert.notNull(context, "Only non-null SecurityContext instances are permitted");
+        contextHolder.set(context);
+    }
+
+    public SecurityContext createEmptyContext() {
+        return new SecurityContextImpl();
+    }
+}
+~~~
 +) TODO: 시큐리티 관련 설정 방법을 정리하고 예제 웹페이지 만들어보기 
 
 -------
