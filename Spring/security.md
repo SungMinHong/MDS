@@ -304,10 +304,7 @@ FilterSecurityInterceptor의 doFilter() 내용을 간단히 정리하면 아래�
 Q1. SecurityContextHolder를 static으로 사용하는데 어떻게 필터에서 필요한 SecurityContext를 찾을 수 있을까?
 <br/>
 A1. 내부적으로 전략패턴을 통해 만들어진 SecurityContextHolderStrategy가 3개 있고 그 중 디폴트인 ThreadLocalSecurityContextHolderStrategy을 보면 답을 얻을 수 있다. 또한 그 안을 보면 ThreadLocal을 쓰고 있는데 이 클래스를 사용하면 쓰레드를 기준으로 저장된 변수를 가져올 수 있다. ThreadLocal<SecurityContext> contextHolder를 사용해 쓰레드별로 SecurityContext값을 저장하고 가져오고 삭제할 수 있다. 단 쓰레드 별로 관리되는 변수 이기 때문에 사용 후 반드시 remove를 해줘야 한다. 실제로 SecurityContextPersistenceFilter에서 SecurityContextHolder.clearContext()를 통해 remove()를 호출해 쓰레드 변수를 삭제해 준다.
-  
-Q2. 그렇다면 JVM내에서 모두 같은 SecurityContext를 공유하고 싶은 경우는 어떻게 하는가?
-A2. 이미 정의 있는 GlobalSecurityContextHolderStrategy를 사용하거나 커스텀 전략을 만들고 그 전략의 이름인 strategyName을 set해주면 된다. 사실 이 경우는 Swing같은 rich clients에게 적합하다.
-  
+
 ~~~java
 /**
  * A <code>ThreadLocal</code>-based implementation of {@link SecurityContextHolderStrategy}.
@@ -349,6 +346,13 @@ final class ThreadLocalSecurityContextHolderStrategy implements SecurityContextH
     }
 }
 ~~~
+
+Q2. 그렇다면 JVM내에서 모두 같은 SecurityContext를 공유하고 싶은 경우는 어떻게 하는가?
+<br/>
+A2. 이미 정의 있는 GlobalSecurityContextHolderStrategy를 사용하거나 커스텀 전략을 만들고 그 전략의 이름인 strategyName을 set해주면 된다. 사실 이 경우는 Swing같은 rich clients에게 적합하다.
+  
+  
+<br/>
 +) TODO: 시큐리티 관련 설정 방법을 정리하고 예제 웹페이지 만들어보기 
 
 -------
