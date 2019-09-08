@@ -19,6 +19,7 @@
   - M이 짝수냐 홀수냐에 따라 알고리즘 자체가 다르다. (2,4,6) B-Tree와 (3,5,7) B-Tree는 다르다. 짝수 B-Tree가 알고리즘이 더 복잡한 편이다.
   - 여기서는 M이 3보다 크거나 같은 홀수라고 가정한다
 - 아래 그림은 5차 B트리 예시이다
+
 ![5차 B-Tree](https://user-images.githubusercontent.com/18229419/64060379-baf50280-cc06-11e9-85b4-7b51cda33ee6.png)
 - 2-3 Tree 2차 B-tree와 동일 2-3-4 Tree는 3차 B-tree와 동일하다 
 
