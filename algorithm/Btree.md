@@ -56,8 +56,11 @@
 - 전체적으로는 트리검색
 - 노드내에서는 순회검색
 
-- 시물레이션 해볼 수 있는 사이트 링크: https://www.cs.usfca.edu/~galles/visualization/BTree.html
+
 - TODO:: 이어서 정리
+
+## B-tree 시뮬레이션
+- 시물레이션 해볼 수 있는 사이트 링크: https://www.cs.usfca.edu/~galles/visualization/BTree.html
 
 > 출처: [BITcampus 1](https://www.youtube.com/watch?v=WBqKyrL6u-Q)
 
