@@ -45,6 +45,15 @@
 ![BTreeMap Skeleton2](https://user-images.githubusercontent.com/18229419/64486353-00e54280-d267-11e9-81ac-dc7360e369ca.png)
 
 ![BTreeMap](https://user-images.githubusercontent.com/18229419/64486356-0fcbf500-d267-11e9-9edc-27a870323a69.png)
+- k번째 노드의 왼쪽자식은 m_pChildren[k], 오른쪽 자식은 m_pChildren[k+1]
+- Root노드는 m_pNodeHead -> Left(0)에 위치함
+
+![BTreeMap Skeleton3:삽입,삭제,검색,초기화](https://user-images.githubusercontent.com/18229419/64486429-0f802980-d268-11e9-8595-480ce4d9ab27.png)
+- B-tree는 항상 정렬될 상태를 유지해야 하기 때문에 삽입 시 마다 정렬을 함. 삽입정렬을 쓰는 이유는 이미 정렬된 리스트의 경우 O(n)의 시간복잡도를 가지기 때문이다.
+- 삭제할 때는 삭제된 키의 뒤 데이터를 하나씩 앞으로 당겨준다.
+
+
+- 시물레이션 해볼 수 있는 사이트 링크: https://www.cs.usfca.edu/~galles/visualization/BTree.html
 - TODO:: 이어서 정리
 
 > 출처: [BITcampus 1](https://www.youtube.com/watch?v=WBqKyrL6u-Q)
