@@ -37,11 +37,14 @@
 
 ## B-Tree 골격
 ### B-Tree 골격 소스
-![BTreeMap Skeleton](https://user-images.githubusercontent.com/18229419/64066994-d50d0000-cc5b-11e9-9ce2-3d2e4d580f0c.png)
+![BTreeMap Skeleton1](https://user-images.githubusercontent.com/18229419/64066994-d50d0000-cc5b-11e9-9ce2-3d2e4d580f0c.png)
 - B-Tree는 중복키를 처리하지 못한다. 그래서 FindFirst/FindNext/RemoveAt은 구현하지 않는다.
 - m_nDim은 B-Tree의 차수를 나타낸다. 디폴트는 5차이다.
 - B-Tree의 구현에는 m_pNodeHead만 사용하고, m_pNodeTail은 사용하지 않는다. m_pNodeTail 대신에 0(NULL)을 사용한다.
 
+![BTreeMap Skeleton2](https://user-images.githubusercontent.com/18229419/64486353-00e54280-d267-11e9-81ac-dc7360e369ca.png)
+
+![BTreeMap](https://user-images.githubusercontent.com/18229419/64486356-0fcbf500-d267-11e9-9edc-27a870323a69.png)
 - TODO:: 이어서 정리
 
 > 출처: [BITcampus 1](https://www.youtube.com/watch?v=WBqKyrL6u-Q)
