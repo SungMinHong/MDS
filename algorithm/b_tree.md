@@ -35,7 +35,10 @@
 ![5차 B-Tree](https://user-images.githubusercontent.com/18229419/64060379-baf50280-cc06-11e9-85b4-7b51cda33ee6.png)
 - 2-3 Tree 2차 B-tree와 동일 2-3-4 Tree는 3차 B-tree와 동일하다 
 
-## B-Tree 골격
+## B-tree 시뮬레이션
+- 시물레이션 해볼 수 있는 사이트 링크: https://www.cs.usfca.edu/~galles/visualization/BTree.html
+
+## B-Tree 골격(시간날 때 진행해보기)
 ### B-Tree 골격 소스
 ![BTreeMap Skeleton1](https://user-images.githubusercontent.com/18229419/64066994-d50d0000-cc5b-11e9-9ce2-3d2e4d580f0c.png)
 - B-Tree는 중복키를 처리하지 못한다. 그래서 FindFirst/FindNext/RemoveAt은 구현하지 않는다.
@@ -59,8 +62,6 @@
 
 - TODO:: 이어서 정리
 
-## B-tree 시뮬레이션
-- 시물레이션 해볼 수 있는 사이트 링크: https://www.cs.usfca.edu/~galles/visualization/BTree.html
 
 > 출처: [BITcampus 1](https://www.youtube.com/watch?v=WBqKyrL6u-Q)
 
