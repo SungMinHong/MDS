@@ -6,3 +6,6 @@
 - 리액트 라우터 (여러 페이즈를 가지고 있는 프로젝트를 만들 수 있음)
 - 컴포넌트를 좀 더 확실하게 사용하고 싶을 때 타입스크립트로 작성
 - 테스트 코드를 작성하기 위한 Jest, Enzyme 사용
+
+
+> 실습한 소스: https://github.com/SungMinHong/react_example_1
