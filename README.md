@@ -33,6 +33,7 @@
 - [time complexity & space complexity](https://github.com/SungMinHong/TIL/blob/master/algorithm/complexity.md)
 - [sorting algorithm](https://github.com/SungMinHong/TIL/blob/master/algorithm/sorting.md)
 - [[cache] page replacement algorithm](https://github.com/SungMinHong/TIL/blob/master/algorithm/page_replacement_algorithm.md)
+- [B-Tree](https://github.com/SungMinHong/TIL/blob/master/algorithm/b_tree.md)
 
 ### [Cloud](https://github.com/SungMinHong/TIL/tree/master/cloud)
 - [Azure](https://github.com/SungMinHong/TIL/blob/master/cloud/azure.md)
