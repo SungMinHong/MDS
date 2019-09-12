@@ -60,7 +60,7 @@
 - 노드내에서는 순회검색
 
 
-- TODO:: 이어서 정리
+- TODO:: 이어서 정리(필요시)
 
 
 > 출처: [BITcampus 1](https://www.youtube.com/watch?v=WBqKyrL6u-Q)
