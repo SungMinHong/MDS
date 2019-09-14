@@ -9,7 +9,7 @@
 
 ### [JAVA](https://github.com/SungMinHong/TIL/tree/master/JAVA)
 - [JVM](https://github.com/SungMinHong/TIL/blob/master/JAVA/JVM.md)
-- [memory](https://github.com/SungMinHong/TIL/blob/master/JAVA/%EB%A9%94%EB%AA%A8%EB%A6%AC.md)
+- [memory](https://github.com/SungMinHong/TIL/blob/master/JAVA/memory.md)
 - [overloading & overriding](https://github.com/SungMinHong/TIL/blob/master/JAVA/overloading%26overriding)
 - [abstract class & interface](https://github.com/SungMinHong/TIL/blob/master/JAVA/abstract&interface.md)
 - [data type](https://github.com/SungMinHong/TIL/blob/master/JAVA/DataType.md)
