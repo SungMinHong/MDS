@@ -22,9 +22,9 @@
 - [proxy](https://github.com/SungMinHong/TIL/blob/master/Spring/proxy.md)
 - [StopWatch](https://github.com/SungMinHong/TIL/blob/master/Spring/stop_watch.md)
 
-### [Open source](https://github.com/SungMinHong/TIL/tree/master/openSource)
-- [redis](https://github.com/SungMinHong/TIL/blob/master/openSource/redis.md)
-- [elasticsearch](https://github.com/SungMinHong/TIL/blob/master/openSource/elasticsearch.md)
+### [Solution](https://github.com/SungMinHong/TIL/tree/master/solution)
+- [redis](https://github.com/SungMinHong/TIL/blob/master/solution/redis.md)
+- [elasticsearch](https://github.com/SungMinHong/TIL/blob/master/solution/elasticsearch.md)
 
 ### [FE](https://github.com/SungMinHong/TIL/tree/master/FE)
 - [React](https://github.com/SungMinHong/TIL/tree/master/FE/React)
