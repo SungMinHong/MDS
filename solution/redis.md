@@ -34,8 +34,6 @@
   - Text 문자열 뿐만 아니라 Integer와 같은 숫자나 JPEG같은 Binary File까지 저장할 수 있다.
   - 명령어 : http://redis.io/commands#string
 
-<br/>
-
 - 2)Set
   - Set은 String의 집합이다. 여러개의 값을 하나의 Value 내에 넣을 수 있다고 생각하면 된다.
   - 블로그 포스트의 태깅(Tag)등에 사용될 수 있다.
@@ -44,8 +42,6 @@
   
   ![set](https://t1.daumcdn.net/cfile/tistory/1572E6364FFBD9FA07)
   - 명령어 : http://redis.io/commands#set
-
-<br/>
 
 - 3)Sorted Set
   - Set 에 "score" 라는 필드가 추가된 자료형이다.
