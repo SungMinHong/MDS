@@ -101,7 +101,12 @@
     - RDB와 AOF 방식의 장단점을 상쇠하기 위해서 두 가지 방식을 혼용해서 사용하는 것이 바람직하다.
     - 주기적으로 snapshot으로 백업하고, 다음 snapshot까지의 저장을 AOF 방식으로 수행한다. 
     - 이렇게 하면 서버가 restart될 때 백업된 snapshot을 reload하고, 소량의 AOF 로그만 replay하면 되기 때문에, restart 시간을 절약하고 데이타의 유실을 방지할 수 있다.
-    - TODO:: snapshotting방식에서 SAVE 방식과 BGSAVE 방식의 장 단점을 조사해보자
+
+
+<br/>
+<br/>
+
+- TODO:: snapshotting방식에서 SAVE 방식과 BGSAVE 방식의 장 단점을 조사해보자
 
 > 출처: https://redis.io/topics/persistence
 
