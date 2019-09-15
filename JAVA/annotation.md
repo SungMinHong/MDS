@@ -77,5 +77,62 @@ public @interface CustomAnnotation {
 - Java8 부터 지원하며, 연속적으로 어노테이션을 선언할 수 있게 해준다.
 
 <br/>
+<br/>
+<br/>
 
-> 출처: https://elfinlas.github.io/2017/12/14/java-annotation/
+
+# 커스텀 어노테이션을 만들어 보기
+---
+- 정수, 문자열 값을 주입하는 2개의 예제를 만들어 보자.
+
+## 첫째, 정수 값 주입 예제
+---
+### 1. 어노테이션 인터페이스 작성
+~~~java
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface InsertIntData {
+    int data() default 0;
+}
+~~~
+- 주입 받는 값을 저장하기 위해 멤버 변수에 data라는 int형 필드를 만들어 준다.
+### 2. 어노테이션을 사용할 예제 클래스 작성
+~~~java
+public class AnnotationIntInjectionExam {
+    @InsertIntData(data = 10)
+    private int myAge;
+
+    @InsertIntData
+    private int defaultAge;
+
+    public AnnotationIntegerInjectionExam() {
+        this.myAge = -1;
+        this.defaultAge = -1;
+    }
+
+    public int getMyAge() {
+        return myAge;
+    }
+
+    public int getDefaultAge() {
+        return defaultAge;
+    }
+}
+~~~
+- 변수는 다음과 같이 myAge와 defaultAge 두 가지인데 myAge에 어노테이션에서는 10으로 값을 주입한다.
+- 하지만 defaultAge 에서는 값이 없는데 이 경우 어노테이션에서 정한 기본 값인 0으로 값이 주입이 된다.
+- 전달인자가 없는 생성자에서는 두 변수를 -1으로 초기화 한다.
+
+
+## 둘째, 문자열 값 주입 예제
+---
+TODO:: 이어서 작성
+
+---
+출처: https://elfinlas.github.io/2017/12/14/java-annotation/
+
+<br/>
+
+출처: https://elfinlas.github.io/2017/12/14/java-custom-anotation-01/
+
+<br/>
