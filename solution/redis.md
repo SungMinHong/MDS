@@ -92,7 +92,7 @@
     - 장점 : 메모리의 snapshot을 그대로 뜬 것이기 때문에, 서버 restart시 snapshot만 load하면 되므로 restart 시간이 빠르다.
     - 단점 : snapshot을 추출하는데 시간이 오래 걸리며, snapshot아 추출된 후 서버가 down되면 snapshot 추출 이후 데이타는 유실된다. 즉, 백업 시점의 데이타만 유지된다.
     
-- 2) AOF 방식
+- 2)AOF 방식
     - AOF(Append On File) 방식은 redis의 모든 write/update 연산 자체를 모두 log 파일에 기록하는 형태이다.
     - 서버가 재 시작될 때 기록된  write/update operation을 순차적으로 재 실행하여 데이터를 복구한다. operation 이 발생할 때 마다 매번 기록하기 때문에, RDB 방식과는 달리 특정 시점이 아니라 항상 현재 시점까지의 로그를 기록할 수 있으며, 기본적으로 non-blocking call이다.
     - 장점 : Log file에 대해서 append만 하기 때문에, log write 속도가 빠르며, 어느 시점에 server가 down되더라도 데이타 유실이 발생하지 않는다.
