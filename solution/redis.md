@@ -23,51 +23,52 @@
 - redis가 Key/Value Store이지만 저장되는 Value가 단순한 Object가 아니라 다양한 자료구조를 갖는 다는 점에서 큰 차이가 있다.
 - redis가 지원하는 자료형은 크게 아래와 같이 5가지가 있다.
 
-1) String
-- 일반적인 문자열로 최대 512mbyte 길이 까지 지원한다.
-- Text 문자열 뿐만 아니라 Integer와 같은 숫자나 JPEG같은 Binary File까지 저장할 수 있다.
-- 명령어 : http://redis.io/commands#string
+<br/>
 
-2) Set
-- Set은 String의 집합이다. 여러개의 값을 하나의 Value 내에 넣을 수 있다고 생각하면 된다.
-- 블로그 포스트의 태깅(Tag)등에 사용될 수 있다.
-- Set간의 연산을 지원하는데, 집합인 만큼 교집합, 합집합, 차이(Differences)를 매우 빠른 시간내에 추출할 수 있다.
-- 삽입 순으로 정렬되어 있다.
+- 1)String
+  - 일반적인 문자열로 최대 512mbyte 길이 까지 지원한다.
+  - Text 문자열 뿐만 아니라 Integer와 같은 숫자나 JPEG같은 Binary File까지 저장할 수 있다.
+  - 명령어 : http://redis.io/commands#string
+
+<br/>
+
+- 2)Set
+  - Set은 String의 집합이다. 여러개의 값을 하나의 Value 내에 넣을 수 있다고 생각하면 된다.
+  - 블로그 포스트의 태깅(Tag)등에 사용될 수 있다.
+  - Set간의 연산을 지원하는데, 집합인 만큼 교집합, 합집합, 차이(Differences)를 매우 빠른 시간내에 추출할 수 있다.
+  - 삽입 순으로 정렬되어 있다.
 
 <br/>
 
 ![set 테이블](https://t1.daumcdn.net/cfile/tistory/1572E6364FFBD9FA07)
-- 명령어 : http://redis.io/commands#set
+  - 명령어 : http://redis.io/commands#set
 
-3) Sorted Set
-- Set 에 "score" 라는 필드가 추가된 자료형이다.
-- score는 정렬을 위한 일종의 "가중치" 정도로 생각하면 된다.
-- Sorted Set에서 데이터는 오름 차순으로 내부 정렬되며, 정렬이 되어 있는 만큼 score 값 범위에 따른 쿼리(range query), top rank에 따른 query 등이 가능하다.
-- 명령어 : http://redis.io/commands#sorted_set
+<br/>
 
-4) Hashes
-hash는 value내에 field/string value 쌍으로 이루어진 테이블을 저장하는 데이타 구조체이다.
-RDBMS에서 PK 1개와 string 필드 하나로 이루어진 테이블이라고 이해하면 된다.
+- 3)Sorted Set
+  - Set 에 "score" 라는 필드가 추가된 자료형이다.
+  - score는 정렬을 위한 일종의 "가중치" 정도로 생각하면 된다.
+  - Sorted Set에서 데이터는 오름 차순으로 내부 정렬되며, 정렬이 되어 있는 만큼 score 값 범위에 따른 쿼리(range query), top rank에 따른 query 등이 가능하다.
+  - 명령어 : http://redis.io/commands#sorted_set
 
-명령어 : http://redis.io/commands#hash
+- 4)Hashes
+  - hash는 value내에 field/string value 쌍으로 이루어진 테이블을 저장하는 데이타 구조체이다.
+  - RDBMS에서 PK 1개와 string 필드 하나로 이루어진 테이블이라고 이해하면 된다.
 
-5) List
-list는 string들의 집합으로 저장되는 데이타 형태는 set과 유사하지만, 일종의 양방향 Linked List라고 생각하면 된다. List 앞과 뒤에서 PUSH/POP 연산을 이용해서 데이타를 넣거나 뺄 수 있고, 지정된 INDEX 값을 이용하여 지정된 위치에 데이타를 넣거나 뺄 수 있다. 
+  - 명령어 : http://redis.io/commands#hash
 
+- 5)List
+  - list는 string들의 집합으로 저장되는 데이타 형태는 set과 유사하지만, 일종의 양방향 Linked List라고 생각하면 된다. List 앞과 뒤에서 PUSH/POP 연산을 이용해서 데이타를 넣거나 뺄 수 있고, 지정된 INDEX 값을 이용하여 지정된 위치에 데이타를 넣거나 뺄 수 있다. 
+  - 명령어 : http://redis.io/commands#list
 
-
-
-명령어 : http://redis.io/commands#list
-
-6) 데이타 구조체 정리
-지금까지 간략하게 redis가 지원하는 데이타 구조체들에 대해서 살펴보았다.
-redis의 데이타 구조체의 특징을 다시 요약하자면
-Value가 일반적인 string 뿐만 아니라, set,list,hash와 같은 집합형 데이타 구조를 지원한다.
-저장된 데이타에 대한 연산이나 추가 작업 가능하다. (합집합,교집합,RANGE QUERY 등)
-set은 일종의 집합, sorted set은 오름차순으로 정렬된 집합, hash는 키 기반의 테이블, list는 일종의 링크드 리스트 와 같은 특성을 지니고 있다.
-이러한 집합형 데이타 구조 (set,list,hash)등은 redis에서 하나의 키당 총 2^32개의 데이타를 이론적으로 저장할 수 있으나, 최적의 성능을 낼 수 있는 것은 일반적으로 1,000~5,000개 사이로 알려져 있다.
-
-데이타 구조에 따른 저장 구조를 정리해서 하나의 그림에 도식화해보면 다음과 같다.
+- 6)데이타 구조체 정리
+  - 지금까지 간략하게 redis가 지원하는 데이타 구조체들에 대해서 살펴보았다.
+  - redis의 데이타 구조체의 특징을 다시 요약하자면
+  - Value가 일반적인 string 뿐만 아니라, set,list,hash와 같은 집합형 데이타 구조를 지원한다.
+  - 저장된 데이타에 대한 연산이나 추가 작업 가능하다. (합집합,교집합,RANGE QUERY 등)
+  - set은 일종의 집합, sorted set은 오름차순으로 정렬된 집합, hash는 키 기반의 테이블, list는 일종의 링크드 리스트 와 같은 특성을 지니고 있다.
+  - 이러한 집합형 데이타 구조 (set,list,hash)등은 redis에서 하나의 키당 총 2^32개의 데이타를 이론적으로 저장할 수 있으나, 최적의 성능을 낼 수 있는 것은 일반적으로 1,000~5,000개 사이로 알려져 있다.
+  - 데이타 구조에 따른 저장 구조를 정리해서 하나의 그림에 도식화해보면 다음과 같다.
 
 
 출처: https://bcho.tistory.com/654 [조대협의 블로그]
