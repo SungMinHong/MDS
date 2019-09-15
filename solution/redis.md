@@ -1,5 +1,5 @@
 # Redis
-## Redis 개념
+## Redis 
 ### Intro
 - 약자: REmote DIctionary System
 - 메모리 기반의 Key/Value Store 이다.
@@ -74,11 +74,34 @@
   - 데이터 구조에 따른 저장 구조를 정리해서 하나의 그림에 도식화해보면 다음과 같다.
   
        ![데이터 구조에 따른 도식도](https://t1.daumcdn.net/cfile/tistory/202A37504FFBDA6026)
-  
-> 출처: https://bcho.tistory.com/654 [조대협의 블로그]
 
 ### 3. Persistence
+- redis는 데이터를 disk에 저장할 수 있다.
+- memcached의 경우 메모리에만 데이터를 저장하기 때문에 서버가 shutdown 된 후에 데이터가 유실 되지만, redis는 서버가 shutdown된 이후 restart 되더라도, disk에 저장해 놓은 데이터를 다시 읽어서 메모리에 Loading하기 때문에 데이터가 유실되지 않는다.
+- redis에서는 데이터를 저장하는 방법은 snapshotting 방식과 AOF (Append on file) 방식이 있다.
 
+<br/>
+
+- 1)snapshotting (RDB) 방식
+    - 순간적으로 메모리에 있는 내용을 DISK에 전체를 옮겨 담는 방식이다.
+    - [SAVE](https://redis.io/commands/save)와 [BGSAVE](https://redis.io/commands/bgsave) 두 가지 방식이 있다.
+    - SAVE는 blocking 방식으로 순간적으로 redis의 모든 동작을 정지시키고, 그때의 snapshot을 disk에 저장한다.
+    - BGSAVE는 non-blocking 방식으로 별도의 process를 띄운 후, 명령어 수행 당시의 메모리 snaopshot을 disk에 저장하며, 저장 순간에 redis는 동작을 멈추지 않고 정상적으로 동작한다.
+    - 장점 : 메모리의 snapshot을 그대로 뜬 것이기 때문에, 서버 restart시 snapshot만 load하면 되므로 restart 시간이 빠르다.
+    - 단점 : snapshot을 추출하는데 시간이 오래 걸리며, snapshot아 추출된 후 서버가 down되면 snapshot 추출 이후 데이타는 유실된다. 즉, 백업 시점의 데이타만 유지된다.
+    
+- 2) AOF 방식
+    - AOF(Append On File) 방식은 redis의 모든 write/update 연산 자체를 모두 log 파일에 기록하는 형태이다.
+    - 서버가 재 시작될 때 기록된  write/update operation을 순차적으로 재 실행하여 데이터를 복구한다. operation 이 발생할 때 마다 매번 기록하기 때문에, RDB 방식과는 달리 특정 시점이 아니라 항상 현재 시점까지의 로그를 기록할 수 있으며, 기본적으로 non-blocking call이다.
+    - 장점 : Log file에 대해서 append만 하기 때문에, log write 속도가 빠르며, 어느 시점에 server가 down되더라도 데이타 유실이 발생하지 않는다.
+    - 단점 : 모든 write/update operation에 대해서 log를 남기기 때문에 로그 데이타 양이 RDB 방식에 비해서 과대하게 크며, 복구시 저장된 write/update operation을 다시 replay 하기 때문에 restart 속도가 느리다.
+- +) 권장 사항
+    - RDB와 AOF 방식의 장단점을 상쇠하기 위해서 두 가지 방식을 혼용해서 사용하는 것이 바람직하다.
+    - 주기적으로 snapshot으로 백업하고, 다음 snapshot까지의 저장을 AOF 방식으로 수행한다. 
+    - 이렇게 하면 서버가 restart될 때 백업된 snapshot을 reload하고, 소량의 AOF 로그만 replay하면 되기 때문에, restart 시간을 절약하고 데이타의 유실을 방지할 수 있다.
+    - TODO:: snapshotting방식에서 SAVE 방식과 BGSAVE 방식의 장 단점을 조사해보자
+
+> 출처: https://redis.io/topics/persistence
 ### 4. Pub/Sub Model
 ### 5. Replication Topology
 ### 6. Expriation
