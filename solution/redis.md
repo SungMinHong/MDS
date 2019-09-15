@@ -10,13 +10,17 @@
 
 > 출처: https://bcho.tistory.com/654 [조대협의 블로그]
 
+<br/>
+
 ### 1. Key/Value Store
 - Redis는 기본적으로 Key/Value Store이다. 특정 키 값에 값을 저장하는 구조로 되어 있고 기본적인 PUT/GET Operation을 지원한다.
 
-![key value table](https://t1.daumcdn.net/cfile/tistory/1377533B4FFBD9D105)
+    ![key value table](https://t1.daumcdn.net/cfile/tistory/1377533B4FFBD9D105)
 - 단, 이 모든 데이타는 메모리에 저장되고, 이로 인하여 매우 빠른 write/read 속도를 보장한다. 
 - 그래서 전체 저장 가능한 데이타 용량은 물리적인 메모리 크기를 넘어설 수 없다. (물론 OS의 disk swapping 영역등을 사용하여 확장은 가능하겠지만 성능이 급격하게 떨어지기 때문에 의미가 없다.)
 - 데이타 억세스는 메모리에서 일어나지만 server restart 와 같이 서버가 내려갔다가 올라오는 상황에 데이타를 저장을 보장하기 위해서 Disk를 persistence store로 사용한다.
+
+<br/>
 
 ### 2. 다양한 데이타 타입
 - 단순한 메모리 기반의 Key/Value Store라면 이미 memcached가 있다. 그렇다면 어떤 차이가 있길래 redis가 유행하는 것일까?
@@ -37,10 +41,8 @@
   - 블로그 포스트의 태깅(Tag)등에 사용될 수 있다.
   - Set간의 연산을 지원하는데, 집합인 만큼 교집합, 합집합, 차이(Differences)를 매우 빠른 시간내에 추출할 수 있다.
   - 삽입 순으로 정렬되어 있다.
-
-<br/>
-
-![set 테이블](https://t1.daumcdn.net/cfile/tistory/1572E6364FFBD9FA07)
+  
+  ![set](https://t1.daumcdn.net/cfile/tistory/1572E6364FFBD9FA07)
   - 명령어 : http://redis.io/commands#set
 
 <br/>
@@ -49,12 +51,15 @@
   - Set 에 "score" 라는 필드가 추가된 자료형이다.
   - score는 정렬을 위한 일종의 "가중치" 정도로 생각하면 된다.
   - Sorted Set에서 데이터는 오름 차순으로 내부 정렬되며, 정렬이 되어 있는 만큼 score 값 범위에 따른 쿼리(range query), top rank에 따른 query 등이 가능하다.
+  
+       ![sorted set](https://t1.daumcdn.net/cfile/tistory/111999394FFBDA1215)
   - 명령어 : http://redis.io/commands#sorted_set
 
 - 4)Hashes
-  - hash는 value내에 field/string value 쌍으로 이루어진 테이블을 저장하는 데이타 구조체이다.
+  - hash는 value내에 field/string value 쌍으로 이루어진 테이블을 저장하는 데이터 구조체이다.
   - RDBMS에서 PK 1개와 string 필드 하나로 이루어진 테이블이라고 이해하면 된다.
-
+  
+       ![hash](https://t1.daumcdn.net/cfile/tistory/140B503C4FFBDA2825)
   - 명령어 : http://redis.io/commands#hash
 
 - 5)List
