@@ -75,6 +75,8 @@
   
        ![데이터 구조에 따른 도식도](https://t1.daumcdn.net/cfile/tistory/202A37504FFBDA6026)
 
+<br/>
+
 ### 3. Persistence
 - redis는 데이터를 disk에 저장할 수 있다.
 - memcached의 경우 메모리에만 데이터를 저장하기 때문에 서버가 shutdown 된 후에 데이터가 유실 되지만, redis는 서버가 shutdown된 이후 restart 되더라도, disk에 저장해 놓은 데이터를 다시 읽어서 메모리에 Loading하기 때문에 데이터가 유실되지 않는다.
@@ -102,6 +104,9 @@
     - TODO:: snapshotting방식에서 SAVE 방식과 BGSAVE 방식의 장 단점을 조사해보자
 
 > 출처: https://redis.io/topics/persistence
+
+<br/>
+
 ### 4. Pub/Sub Model
 ### 5. Replication Topology
 ### 6. Expriation
