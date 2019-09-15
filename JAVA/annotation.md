@@ -68,13 +68,13 @@ public @interface CustomAnnotation {
   - ElementType.TYPE_USE : 타입 선언
 
 ### 3. @Documented
-- 해당 어노테이션을 Javadoc에 포함시킵니다.
+- 해당 어노테이션을 Javadoc에 포함시킨다.
 
 ### 4. @Inherited
-- 어노테이션의 상속을 가능하게 합니다.
+- 어노테이션의 상속을 가능하게 한다.
 
 ### 5. @Repeatable
-- Java8 부터 지원하며, 연속적으로 어노테이션을 선언할 수 있게 해줍니다.
+- Java8 부터 지원하며, 연속적으로 어노테이션을 선언할 수 있게 해준다.
 
 <br/>
 
