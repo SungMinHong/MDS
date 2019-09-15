@@ -23,8 +23,8 @@
 <br/>
 
 ### 2. 다양한 데이타 타입
-- 단순한 메모리 기반의 Key/Value Store라면 이미 memcached가 있다. 그렇다면 어떤 차이가 있길래 redis가 유행하는 것일까?
-- redis가 Key/Value Store이지만 저장되는 Value가 단순한 Object가 아니라 다양한 자료구조를 갖는 다는 점에서 큰 차이가 있다.
+- 단순한 메모리 기반의 Key/Value Store라면 이미 memcached가 있다.
+- redis가 Key/Value Store이지만 저장되는 Value가 단순한 Object가 아니라 다양한 자료구조를 갖는 다는 점에서 memcached와 큰 차이가 있다.
 - redis가 지원하는 자료형은 크게 아래와 같이 5가지가 있다.
 
 <br/>
@@ -63,22 +63,26 @@
   - 명령어 : http://redis.io/commands#hash
 
 - 5)List
-  - list는 string들의 집합으로 저장되는 데이타 형태는 set과 유사하지만, 일종의 양방향 Linked List라고 생각하면 된다. List 앞과 뒤에서 PUSH/POP 연산을 이용해서 데이타를 넣거나 뺄 수 있고, 지정된 INDEX 값을 이용하여 지정된 위치에 데이타를 넣거나 뺄 수 있다. 
+  - List는 String들의 집합으로 저장되는 데이터 형태로 Set과 유사하지만, 일종의 양방향 Linked List라고 생각하면 된다.
+  - List 앞과 뒤에서 PUSH/POP 연산을 이용해서 데이타를 넣거나 뺄 수 있고, 지정된 INDEX 값을 이용하여 지정된 위치에 데이타를 넣거나 뺄 수 있다. 
+  
+       ![List](https://t1.daumcdn.net/cfile/tistory/206F833B4FFBDA4419)
   - 명령어 : http://redis.io/commands#list
 
-- 6)데이타 구조체 정리
-  - 지금까지 간략하게 redis가 지원하는 데이타 구조체들에 대해서 살펴보았다.
-  - redis의 데이타 구조체의 특징을 다시 요약하자면
-  - Value가 일반적인 string 뿐만 아니라, set,list,hash와 같은 집합형 데이타 구조를 지원한다.
-  - 저장된 데이타에 대한 연산이나 추가 작업 가능하다. (합집합,교집합,RANGE QUERY 등)
-  - set은 일종의 집합, sorted set은 오름차순으로 정렬된 집합, hash는 키 기반의 테이블, list는 일종의 링크드 리스트 와 같은 특성을 지니고 있다.
+- +) 데이터 구조체 총 정리!
+  - 지금까지 간략하게 redis가 지원하는 데이터 구조체들에 대해서 살펴보았다. redis의 데이터 구조체의 특징을 다시 요약하면 아래와 같다.
+    - Value가 일반적인 String 뿐만 아니라, Set,List,Hash와 같은 집합형 데이타 구조를 지원한다.
+    - 저장된 데이타에 대한 연산이나 추가 작업이 가능하다. (합집합,교집합,RANGE QUERY 등)
+    - Set은 일종의 집합, Sorted Set은 오름차순으로 정렬된 집합, Hash는 키 기반의 테이블, List는 일종의 링크드 리스트 와 같은 특성을 지니고 있다.
   - 이러한 집합형 데이타 구조 (set,list,hash)등은 redis에서 하나의 키당 총 2^32개의 데이타를 이론적으로 저장할 수 있으나, 최적의 성능을 낼 수 있는 것은 일반적으로 1,000~5,000개 사이로 알려져 있다.
-  - 데이타 구조에 따른 저장 구조를 정리해서 하나의 그림에 도식화해보면 다음과 같다.
-
-
-출처: https://bcho.tistory.com/654 [조대협의 블로그]
+  - 데이터 구조에 따른 저장 구조를 정리해서 하나의 그림에 도식화해보면 다음과 같다.
+  
+       ![데이터 구조에 따른 도식도](https://t1.daumcdn.net/cfile/tistory/202A37504FFBDA6026)
+  
+> 출처: https://bcho.tistory.com/654 [조대협의 블로그]
 
 ### 3. Persistence
+
 ### 4. Pub/Sub Model
 ### 5. Replication Topology
 ### 6. Expriation
