@@ -119,7 +119,46 @@ public class AnnotationIntInjectionExam {
 
 
 ## 둘째, 문자열 값 주입 예제
-TODO:: 이어서 작성
+### 1. 어노테이션 인터페이스 작성
+~~~java
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface InsertStringData {
+    String data() default "default";
+}
+~~~
+
+### 2. 어노테이션을 사용할 예제 클래스 작성
+~~~java
+public class AnnotationExam02 {
+
+    @InsertStringData(data = "MHLab")
+    private String myData;
+
+    @InsertStringData
+    private String defaultData;
+
+    public AnnotationExam02() {
+        myData = "No data";
+        defaultData = "No data";
+    }
+
+    public String getMyData() {
+        return myData;
+    }
+
+    public String getDefaultData() {
+        return defaultData;
+    }
+}
+~~~
+- 멤버 변수는 myData와 defaultData 두 가지가 있다.
+- myData에 어노테이션에서는 “MHLab”으로 값을 주입한다.
+- defaultData 에서는 값이 없는데 이 경우 어노테이션에서 정한 기본 값인 “default”로 값이 주입된다.
+- 전달인자가 없는 생성자의 경우 “No data” 문자열을 기본으로 저장한다.
+
+## 3. 어노테이션을 수행하는 클래스 작성
+- TODO:: 이어서 작성
 
 ---
 출처: https://elfinlas.github.io/2017/12/14/java-annotation/
