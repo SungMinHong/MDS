@@ -43,3 +43,4 @@ TransactionTimeout은 생소한 개념일 수 있다. 간단히 설명하면 "St
 
 ---
 출처: https://d2.naver.com/helloworld/1321
+출처: https://fuirosun.tistory.com/entry/JDBC-Timeout%EA%B3%BC-DBCP
