@@ -26,7 +26,7 @@ JDBC Driver SocketTimeout은 OS의 SocketTimeout 설정에 영향을 받는다. 
 ![그림 3 각 레벨 별 타임아웃](https://d2.naver.com/content/images/2015/06/helloworld-1321-3.png)
 >그림 3 각 레벨 별 타임아웃
 
-## TransactionTimeout이란?
+## TransactionTimeout
 TransactionTimeout은 프레임워크(Spring, EJB Container)나 애플리케이션 레벨에서 유효한 타임아웃이다.
 
 TransactionTimeout은 생소한 개념일 수 있다. 간단히 설명하면 "StatementTimeout x N(Statement 수행 수) + α(가비지 컬렉션 및 기타)"라고 할 수 있다. 전체 Statement 수행 시간을 허용할 수 있는 최대 시간 이내로 제한하려 할 때 TransactionTimeout을 사용한다.
@@ -41,6 +41,44 @@ TransactionTimeout은 생소한 개념일 수 있다. 간단히 설명하면 "St
 </tx:method></tx:attributes>  
 ~~~
 
+Spring에서 제공하는 TransactionTimeout은 매우 단순하다. 해당 Transaction의 시작 시간과 경과 시간을 기록하면서, 특정 이벤트 발생 시 경과 시간을 확인하여 타임아웃 이상일 경우 예외(Exception)를 발생하도록 하고 있다.
+
+Spring에는 Transaction Synchronization방식이라고 하여 Connection을 ThreadLocal에저장해 두고 사용한다. ThreadLocal에 Connection 저장 시 Transaction의 시작 시간과 타임아웃 시간을 같이 기록하고, Proxy Connection을 사용하여 Statement를 생성하는 작업을 시도할 경우 경과 시간을 체크하여 예외를 발생시키도록 구현되어있다.
+
+EJB CMT 구현 방식 또한 크게 다르지 않다. 만약 TransactionTimeout이 매우 중요하고 사용하는 컨테이너나 프레임워크에서 이런 기능을 제공하지 않는다면 직접 구현해서 사용해도 별 무리가 없을 정도로 매우 단순한 구조이다. TransactionTimeout에 대한 표준 API는 없다.
+
+수행 시간이 200ms인 Statement가 5개 이하이고 기타 부수적인 비즈니스 로직 처리 시간이나 프레임워크 동작 시간이 100ms일 경우, TrasactionTimeout시간은 1100ms((200 x 5)+100) 이상으로 설정해야 한다.
+
+
+## StatementTimeout
+Statement 하나가 얼마나 오래 수행되어도 괜찮은지에 대한 한계 값이다. JDBC API인 Statement에 타임아웃 값을 설정하며, 이 값을 바탕으로 JDBC 드라이버가 StatementTimeout을 처리한다. JDBC API인 java.sql.Statement.setQueryTimeout(int timeout) 메서드로 설정한다.
+
+요즘 개발 환경에서는 개발자가 직접 StatementTimeout을 Java 코드로 설정하는 경우는 드물며, 프레임워크를 이용하여 해결하는 경우가 많다. iBatis를 예로 들어 설명하자면 "sql-map-config.xml" 파일의 sqlMapConfig/settings에 @defaultStatementTimeout 값으로 기본값을 설정할 수 있다. 또한 "sql-map.xml" 파일의 statement, select, insert, update 구문마다 @timeout 값으로 개별적으로 설정할 수 있다.
+
+StatementTimeout 시간은 애플리케이션 특성에 따라 지정하기 때문에 이에 대한 설정 권장 값은 없다.
+
+### JDBC 드라이버의 StatementTimeout 동작 방식
+StatementTimeout의 동작방식은 DBMS나 드라이버별로 다르다.
+Oracle과 Microsoft SQL Server의 동작 방식이 서로 비슷하고, MySQL과 CUBRID의 동작 방식이 서로 비슷하다.
+
+### MySQL JDBC Statement의 QueryTimeout(5.0.8 버전)
+![그림 6 MySQL JDBC Statement의 QueryTimeout의 동작 과정(5.0.8 버전)](https://d2.naver.com/content/images/2015/06/helloworld-1321-6.png)
+> 그림 6 MySQL JDBC Statement의 QueryTimeout의 동작 과정(5.0.8 버전)
+
+<br/>
+MySQL JDBC Statement(5.0.8 버전)의 QueryTimeout은 다음과 같은 과정으로 동작한다.
+
+- Connection.createStatement() 메서드를 호출하여 Statement를 생성한다.
+- Statement.executeQuery() 메서드를 호출한다.
+- Statement는 내부 Connection을 사용하여 MySQL DBMS로 쿼리를 전송한다.
+- Statement는 타임아웃 처리를 위해 새로운 타임아웃 처리용 스레드를 생성한다. 5.1.x 버전에서는 Connection에 한 개의 스레드가 할당되는 것으로 변경되었다.
+- 스레드에 타임아웃 처리를 등록한다.
+- 타임아웃이 발생한다.
+- 타임아웃 처리 스레드가 Statement와 동일한 설정의 Connection을 생성한다.
+- 생성된 Connection을 사용하여 취소 쿼리(KILL QUERY "connectionId")를 전송한다.
+
+
 ---
 출처: https://d2.naver.com/helloworld/1321
+<br/>
 출처: https://fuirosun.tistory.com/entry/JDBC-Timeout%EA%B3%BC-DBCP
