@@ -50,6 +50,7 @@ JVM의 메모리는 크게 클래스 영역, 자바 스택, 힙, 네이티브 �
   - Young 3개 영역(Eden, Survivor 1, Survivor 2)
   - Old 1개 영역(메모리)
 
+# TODO:: 이어서 정리하기
 
 
 ---
