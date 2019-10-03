@@ -67,9 +67,9 @@ Eden에서 survivor 둘 중 하나의 영역으로 할당 되고, 할당된 Surv
 
 <img src="https://user-images.githubusercontent.com/18229419/66101345-72f04380-e5e9-11e9-9c40-9ab346ef87d3.png" width="400" height="600">
 
-<br/>
-
 > 1. eden영역에서 survivor 영역으로
+
+<br/>
 
 ![사용이 끝난 survivor 영역에서 다른 survivor 영역으로](https://user-images.githubusercontent.com/18229419/66101350-75eb3400-e5e9-11e9-8fc6-473876c43f08.png)
 > 2. 사용이 끝난 survivor 영역에서 다른 survivor 영역으로
