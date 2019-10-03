@@ -61,16 +61,19 @@ JVM의 메모리는 크게 클래스 영역, 자바 스택, 힙, 네이티브 �
 Eden에서 survivor 둘 중 하나의 영역으로 할당 되고, 할당된 Survivor 영역이 차면, GC가 되면서 Eden 영역에 있는 객체와 꽉 찬 Survivor 영역에 있는 객체가 비어 있는 Survivor 영역으로 이동한다. 그러다가 더 큰 객체가 생성되거나, 더 이상 Young 영역에 공간이 남지 않으면 객체들은 Old 영역으로 이동하게 된다.
 
 <br/>
-위 과정을 그림으로 도식화해보았다. 메모리 공간을 원형통으로, heap에 쌓이는 데이터를 원형통에 담긴 내용물로 시각화 했다. 내용물이 작아지는 것을 GC로 표현했다.
+위 과정을 그림으로 도식화해보았다. 메모리 공간을 원형통으로, heap에 쌓이는 데이터를 원형통에 담긴 내용물로 시각화 했다. 내용물이 작아지는 것을 GC로 표현했다. 영역은 young 영역만으로 한정했다. 
 
 <img src="https://user-images.githubusercontent.com/18229419/66101345-72f04380-e5e9-11e9-9c40-9ab346ef87d3.png" width="400" height="600">
+
 > 1. eden영역에서 survivor 영역으로
 
 ![사용이 끝난 survivor 영역에서 다른 survivor 영역으로](https://user-images.githubusercontent.com/18229419/66101350-75eb3400-e5e9-11e9-8fc6-473876c43f08.png)
 > 2. 사용이 끝난 survivor 영역에서 다른 survivor 영역으로
 
 
-출처: https://12bme.tistory.com/57 [길은 가면, 뒤에 있다.]
+
+
+
 # TODO:: 이어서 정리하기
 
 
