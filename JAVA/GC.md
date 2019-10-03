@@ -71,10 +71,28 @@ Eden에서 survivor 둘 중 하나의 영역으로 할당 되고, 할당된 Surv
 > 2. 사용이 끝난 survivor 영역에서 다른 survivor 영역으로
 
 
+### GC의 종류
+- 크게 두 가지 타입으로 마이너 GC와 메이저 GC의 두가지 GC가 발생할 수 있다.
+
+> minor GC: Young 영역에서 발생하는 GC <br/>
+major GC(FULL GC): Old 영역이나 Perm 영역에서 발생하는 GC
+
+<br/>
+이 두 가지 GC가 어떻게 상호 작용하느냐에 따라서 GC 방식에 차이가 나며, 성능에도 영향을 준다. GC가 발생하거나 객체가 각 영역에서 다른 영역으로 이동할 때 애플리케이션의 병목이 발생하면서 성능에 영향을 주게 된다. 그래서 핫 스팟(Hot Spot) JVM에서는 스레드 로컬 할당 버퍼(TLABs: Thread-Local Allocation Buffers)라는 것을 사용한다. 이를 통해 각 스레드별 메모리 버퍼를 사용하면 다른 스레드에 영향을 주지 않는 메모리 할당 작업이 가능하다. 
+![쓰레드 로컬 할당 버퍼](https://t1.daumcdn.net/cfile/tistory/224A224358FF17593F)
+
+### GC(가비지 콜렉터) 방식
+WAS나 자바 애플리케이션 수행시 옵션을 지정하여 선택할 수 있다.
+
+> Serial Collector (이하 시리얼 콜렉터) </br>
+Parallel Collector (이하 병렬 콜렉터) </br>
+Parallel Compacting Collector (이하 병렬 컴팩팅 콜렉터) </br>
+Concurrent Mark-Sweep (CMS) Collector (이하 CMS 콜렉터) </br>
+Garbage First (G1)
 
 
 
-# TODO:: 이어서 정리하기
+
 
 
 ---
