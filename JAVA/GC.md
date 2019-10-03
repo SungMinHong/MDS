@@ -97,11 +97,9 @@ Parallel Compacting Collector (이하 병렬 컴팩팅 콜렉터) </br>
 Concurrent Mark-Sweep (CMS) Collector (이하 CMS 콜렉터) </br>
 Garbage First (G1)
 
-+) 현재 8버전 이상의 JDK에서 GC를 선택할 때 주로 CMS, G1 GC를 두고 고민을 하게 된다고 생각합니다.
-
 
 ### TODO:: 이후 포스트에서 다뤄야 할 내용 리스트
-- GC 방식 5가지 중 CMS와 G1 방식에 대해 중점적으로 정리하기
+- GC 방식 5가지 중 CMS와 G1 방식에 대해 중점적으로 정리하기 (현재 8버전 이상의 JDK에서 GC를 선택할 때 주로 CMS, G1 GC를 두고 고민을 하게 된다고 생각하기 때문.)
 - GC 선택과 GC 커스텀을 위한 자료 정리하기
 - 직접 GC 커스텀해보기
   - 참고: [G1 GC 적용과 JVM Upgrade](https://brunch.co.kr/@alden/45)
