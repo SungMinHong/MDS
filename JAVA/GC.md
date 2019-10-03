@@ -79,10 +79,11 @@ major GC(FULL GC): Old 영역이나 Perm 영역에서 발생하는 GC
 
 <br/>
 이 두 가지 GC가 어떻게 상호 작용하느냐에 따라서 GC 방식에 차이가 나며, 성능에도 영향을 준다. GC가 발생하거나 객체가 각 영역에서 다른 영역으로 이동할 때 애플리케이션의 병목이 발생하면서 성능에 영향을 주게 된다. 그래서 핫 스팟(Hot Spot) JVM에서는 스레드 로컬 할당 버퍼(TLABs: Thread-Local Allocation Buffers)라는 것을 사용한다. 이를 통해 각 스레드별 메모리 버퍼를 사용하면 다른 스레드에 영향을 주지 않는 메모리 할당 작업이 가능하다. 
+
 ![쓰레드 로컬 할당 버퍼](https://t1.daumcdn.net/cfile/tistory/224A224358FF17593F)
 
 ### GC(가비지 콜렉터) 방식
-WAS나 자바 애플리케이션 수행시 옵션을 지정하여 선택할 수 있다.
+WAS나 자바 애플리케이션 수행시 옵션을 지정하여 GC를 선택할 수 있다. (상황에 맞춰 호완성 테스트 및 여러 상황별 테스트 이후 GC를 교체해야한다. 섣부른 GC변경은 오히려 성능을 악화시키거나 JVM crash를 발생시킬 수 있다.)
 
 > Serial Collector (이하 시리얼 콜렉터) </br>
 Parallel Collector (이하 병렬 콜렉터) </br>
@@ -90,9 +91,14 @@ Parallel Compacting Collector (이하 병렬 컴팩팅 콜렉터) </br>
 Concurrent Mark-Sweep (CMS) Collector (이하 CMS 콜렉터) </br>
 Garbage First (G1)
 
++) 현재 8버전 이상의 JDK에서 GC를 선택할 때 주로 CMS, G1 GC를 두고 고민을 하게 된다고 생각합니다.
 
 
-
+### TODO:: 이후 포스트에서 다뤄야 할 내용 리스트
+- GC 방식 5가지 중 CMS와 G1 방식에 대해 중점적으로 정리하기
+- GC 선택과 GC 커스텀을 위한 자료 정리하기
+- 직접 GC 커스텀해보기
+  - 참고: [G1 GC 적용과 JVM Upgrade](https://brunch.co.kr/@alden/45)
 
 
 ---
