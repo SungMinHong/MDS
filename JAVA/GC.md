@@ -63,7 +63,11 @@ Eden에서 survivor 둘 중 하나의 영역으로 할당 되고, 할당된 Surv
 <br/>
 위 과정을 그림으로 도식화해보았다. 메모리 공간을 원형통으로, heap에 쌓이는 데이터를 원형통에 담긴 내용물로 시각화 했다. 내용물이 작아지는 것을 GC로 표현했다. 영역은 young 영역만으로 한정했다. 
 
+<br/>
+
 <img src="https://user-images.githubusercontent.com/18229419/66101345-72f04380-e5e9-11e9-9c40-9ab346ef87d3.png" width="400" height="600">
+
+<br/>
 
 > 1. eden영역에서 survivor 영역으로
 
