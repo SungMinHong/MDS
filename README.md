@@ -16,6 +16,7 @@
 - [JAVA9](https://github.com/SungMinHong/TIL/blob/master/JAVA/JAVA9.md)
 - [serialize](https://github.com/SungMinHong/TIL/blob/master/JAVA/serialize.md)
 - [annotation](https://github.com/SungMinHong/TIL/blob/master/JAVA/annotation.md)
+- [GC](https://github.com/SungMinHong/TIL/blob/master/JAVA/GC.md)
 
 ### [Spring](https://github.com/SungMinHong/TIL/tree/master/Spring)
 - [Spring Security](https://github.com/SungMinHong/TIL/blob/master/Spring/security.md)
