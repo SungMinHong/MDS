@@ -36,13 +36,14 @@ GC를 해도 더이상 사용 가능한 메모리 영역이 없는데 계속 메
 <br/>
 
 ![자바 메모리](https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile22.uf.tistory.com%2Fimage%2F9973563D5ACE0315215FF6)
+> 자바 메모리
 
 JVM의 메모리는 크게 클래스 영역, 자바 스택, 힙, 네이티브 메소드 스택의 4개 영역으로 나뉜다. 
 
 <br/>
 
 ![JVM Heap](https://t1.daumcdn.net/cfile/tistory/22296F3C58FF0CA120)
-
+> JVM Heap
 가비지 컬렉터에서는 힙 메모리를 다룬다. 즉 자바콜렉터가 인식하고 할당하는 자바 메모리 영역은 힙 영역이다. Young, Old, Perm 세 영역으로 나뉜다. 
 - 이 중 Perm(Permanent) 영역은 거의 사용되지 않는 영역으로서 클래스와 메소드 정보와 같이 자바 언어 레벨에서 사용되지 않는다.
 - Young 영역은 Eden영역과 두 개의 Survivor 영역으로 나뉜다.
@@ -50,6 +51,26 @@ JVM의 메모리는 크게 클래스 영역, 자바 스택, 힙, 네이티브 �
   - Young 3개 영역(Eden, Survivor 1, Survivor 2)
   - Old 1개 영역(메모리)
 
+![java memory management](https://t1.daumcdn.net/cfile/tistory/267FB93758FF0CB017)
+> java memory management
+
+일단 메모리에 객체가 생성되면, Eden 영역에 객체가 지정된다.  Eden 영역에 데이터가 어느 정도 쌓이면, 이 영역에 있던 객체가 어디론가 옮겨지거나 삭제된다. 이 때 옮겨가는 위치가 survivor 영역이다. 두개의 Survivor 영역 사이에 우선 순위가 있는 것은 아니다. 하지만, 이 두 개의 영역 중 한 영역은 반드시 비어 있어야 한다. 그 비어있는 영역에 Eden 영역에 있던 객체가 할당된다.
+
+<br/>
+
+Eden에서 survivor 둘 중 하나의 영역으로 할당 되고, 할당된 Survivor 영역이 차면, GC가 되면서 Eden 영역에 있는 객체와 꽉 찬 Survivor 영역에 있는 객체가 비어 있는 Survivor 영역으로 이동한다. 그러다가 더 큰 객체가 생성되거나, 더 이상 Young 영역에 공간이 남지 않으면 객체들은 Old 영역으로 이동하게 된다.
+
+<br/>
+위 과정을 그림으로 도식화해보았다. 메모리 공간을 원형통으로, heap에 쌓이는 데이터를 원형통에 담긴 내용물로 시각화 했다. 내용물이 작아지는 것을 GC로 표현했다.
+
+<img src="https://user-images.githubusercontent.com/18229419/66101345-72f04380-e5e9-11e9-9c40-9ab346ef87d3.png" width="400" height="600">
+> 1. eden영역에서 survivor 영역으로
+
+![사용이 끝난 survivor 영역에서 다른 survivor 영역으로](https://user-images.githubusercontent.com/18229419/66101350-75eb3400-e5e9-11e9-8fc6-473876c43f08.png)
+> 2. 사용이 끝난 survivor 영역에서 다른 survivor 영역으로
+
+
+출처: https://12bme.tistory.com/57 [길은 가면, 뒤에 있다.]
 # TODO:: 이어서 정리하기
 
 
@@ -60,5 +81,6 @@ JVM의 메모리는 크게 클래스 영역, 자바 스택, 힙, 네이티브 �
 <br/>
 출처: [[성능튜닝] 가비지 컬렉터(GC) 이해하기](https://12bme.tistory.com/57)
 <br/>
-출처: [JAVA :: 가비지 컬렉터(Garbage Collector)란 :: WANZARGEN
-](https://wanzargen.tistory.com/15)
+출처: [JAVA :: 가비지 컬렉터(Garbage Collector)란 :: WANZARGEN](https://wanzargen.tistory.com/15)
+<br/>
+출처: [JVM의 Garbage Collection](https://www.holaxprogramming.com/2013/07/20/java-jvm-gc/)
