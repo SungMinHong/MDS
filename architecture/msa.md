@@ -6,4 +6,4 @@
 
 - 실습 진행할 repo: https://github.com/SungMinHong/spring-cloud-workshop
 
-> 출처: (SKplanet Tacademy)[https://www.youtube.com/watch?v=mJMzV6GCmPw]
+> 출처: [SKplanet Tacademy](https://www.youtube.com/watch?v=mJMzV6GCmPw)
