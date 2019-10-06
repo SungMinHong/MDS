@@ -4,6 +4,11 @@
 - MSA에서는 코드 중복을 어느 정도 허용하는 편이다.(공통 모듈로 꼭 같이 쓸 필요는 없다는 의미..)
 
 ![Monolithic Architecture vs Microsevice Architecture](https://www.zirous.com/wp-content/uploads/2018/08/Microservice-Architecture-01.png)
+- Monolithic Architecture
+  - 책임소재가 불분명해 오너쉽이 떨어진다.
+  - 규모가 커지면 배포조직이 필요하게되고 배포가 민첩하지 못하게 된다. (서비스 단위로 자유롭게 배포가 힘들어짐)
+  - 의사소통이 힘들어진다.
+  - 결국 개발자 만족도가 낮아진다.
 
 ## 실습
 - Cloud Native 사용
