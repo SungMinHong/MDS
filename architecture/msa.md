@@ -18,4 +18,9 @@
   - 자동화: 운영에 큰 수고 없이 자동으로 할 수 있는 성질
   - 무상태: 각 서비스의 상태는 상태가 없음
 
+![DevOps](https://user-images.githubusercontent.com/18229419/66267356-e94fa880-e86a-11e9-8658-84676f818a5e.png)
+- 같은 팀 내에서 개발하고 배포까지 할 수 있게만 해도 데브옵스 성격을 가짐
+
+![12번가 요소](https://user-images.githubusercontent.com/18229419/66267358-f2d91080-e86a-11e9-8bc3-2e27ef403596.png)
+
 > 출처: [SKplanet Tacademy](https://www.youtube.com/watch?v=mJMzV6GCmPw)
