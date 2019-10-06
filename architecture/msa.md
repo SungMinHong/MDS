@@ -34,4 +34,7 @@
 
 - L4장비 같은 경우 가격이 너무 비싸 개발환경에도 적용하기 쉽지 않고 이런 경우 개발환경과 실환경을 맞추기 쉽지 않다. 그래서 유레카를 이용해 L7에서 로드밸런싱을 하면 최대한 개발환경과 실환경을 비슷하게 유지할 수 있다.
 
+### Netflix OSS
+- TODO:: 이어서 정리
+
 > 출처: [SKplanet Tacademy](https://www.youtube.com/watch?v=mJMzV6GCmPw)
