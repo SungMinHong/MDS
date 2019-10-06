@@ -21,6 +21,10 @@
 ![DevOps](https://user-images.githubusercontent.com/18229419/66267356-e94fa880-e86a-11e9-8658-84676f818a5e.png)
 - 같은 팀 내에서 개발하고 배포까지 할 수 있게만 해도 데브옵스 성격을 가짐
 
-![12번가 요소](https://user-images.githubusercontent.com/18229419/66267358-f2d91080-e86a-11e9-8bc3-2e27ef403596.png)
+<br/>
+
+![12가지 요소1](https://user-images.githubusercontent.com/18229419/66267358-f2d91080-e86a-11e9-8bc3-2e27ef403596.png)
+![12가지 요소2](https://user-images.githubusercontent.com/18229419/66267442-bce85c00-e86b-11e9-9911-915a913a1469.png)
+> 12가지 요소를 잘지키면 MSA를 하기 쉬워진다.
 
 > 출처: [SKplanet Tacademy](https://www.youtube.com/watch?v=mJMzV6GCmPw)
