@@ -42,3 +42,6 @@
 
 ### [OS](https://github.com/SungMinHong/TIL/tree/master/os)
 - [deadlock](https://github.com/SungMinHong/TIL/blob/master/os/deadlock.md)
+
+### [Architecture](https://github.com/SungMinHong/TIL/blob/master/architecture)
+- [MSA](https://github.com/SungMinHong/TIL/blob/master/architecture/msa.md)
