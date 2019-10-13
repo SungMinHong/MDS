@@ -46,3 +46,5 @@
 - defualt isolation은 semaphore이다
 - semaphore로는 타임아웃 처리를 할 수 없다
 - 쓰레드 생성 비용이 더 높지만 isolation을 타임아웃 처리가 가능한 Thread pool을 사용하는 것을 추천함
+
+![isolation을 Thread pool로 사용](https://user-images.githubusercontent.com/18229419/66713738-99805c80-ede9-11e9-9e0b-9afff22dd375.png)
