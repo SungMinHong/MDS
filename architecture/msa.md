@@ -40,7 +40,7 @@
 ### Feign
 ![Feign url유무](https://user-images.githubusercontent.com/18229419/66500897-55e1d600-eafd-11e9-941f-4f63af82956f.png)
 ![Feign hystrix 사용](https://user-images.githubusercontent.com/18229419/66501962-5e3b1080-eaff-11e9-90d7-a200d2c3d042.png)
-> 출처: [SKplanet Tacademy](https://www.youtube.com/watch?v=mJMzV6GCmPw)
+
 
 ### spring-cloud-zuul
 - defualt isolation은 semaphore이다
@@ -48,3 +48,5 @@
 - 쓰레드 생성 비용이 더 높지만 isolation을 타임아웃 처리가 가능한 Thread pool을 사용하는 것을 추천함
 
 ![isolation을 Thread pool로 사용](https://user-images.githubusercontent.com/18229419/66713738-99805c80-ede9-11e9-9e0b-9afff22dd375.png)
+
+> 출처: [SKplanet Tacademy](https://www.youtube.com/watch?v=mJMzV6GCmPw)
