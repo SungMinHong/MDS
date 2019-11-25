@@ -208,7 +208,7 @@
 ~~~
 
 ## 결론
-### Arrays내 ArrayList는 inner class 였고 AbstractList를 상속하고 있었다. 그렇기 때문에 재정의 하지 않은 add(), remove()는 AbstractList내 add(), remove()를 호출하게 됐던 것이다. (이름만 같은 전혀 다른 클래스!)
+### 1. Arrays내 ArrayList는 inner class 였고 AbstractList를 상속하고 있었다. 그렇기 때문에 재정의 하지 않은 add(), remove()는 AbstractList내 add(), remove()를 호출하게 됐던 것이다. (이름만 같은 전혀 다른 클래스!)
 ~~~java
      /**
      * @serial include
@@ -220,7 +220,7 @@
     }
 ~~~
 
-### +) set메서드가 구현되어있기 떄문에 구글에서 작성한 ImmutableList 클래스와는 차이가 있었다. Arrays.asList()의 반환형인 Arrays내 ArrayList는 set을 재구현하고 사용할 수 있도록 하기 때문에 Immutable 하다고 정의하는 건 무리가 있다고 생각합니다!
+### 2. set메서드가 구현되어있기 때문에 구글에서 작성한 ImmutableList 클래스와는 차이가 있었다. Arrays.asList()의 반환형인 Arrays내 ArrayList는 set을 재구현하고 사용할 수 있도록 하기 때문에 Immutable 하다고 정의하는 건 무리가 있다고 생각합니다!
 ~~~java
   //이건 ImmutableList의 set입니다.
   /**
@@ -246,4 +246,3 @@
 
 ~~~ 
 
-## 
