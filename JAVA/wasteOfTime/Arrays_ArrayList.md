@@ -10,7 +10,7 @@
 
 ## 삽질 과정
 ### 1. Arrays.asList() 를 먼저 확인해봤다.
-~~~
+~~~java
     /**
      * Returns a fixed-size list backed by the specified array.  (Changes to
      * the returned list "write through" to the array.)  This method acts
