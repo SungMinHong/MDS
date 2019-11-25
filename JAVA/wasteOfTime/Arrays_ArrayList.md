@@ -8,6 +8,8 @@
         integers.add(4); //java.lang.UnsupportedOperationException 발생!
 ~~~
 
+<br/>
+
 ## 삽질 과정
 ### 1. Arrays.asList() 를 먼저 확인해봤다.
 ~~~java
@@ -206,6 +208,8 @@
         }
     }
 ~~~
+
+<br/>
 
 ## 결론
 ### 1. Arrays내 ArrayList는 inner class 였고 AbstractList를 상속하고 있었다. 그렇기 때문에 재정의 하지 않은 add(), remove()는 AbstractList내 add(), remove()를 호출하게 됐던 것이다. (이름만 같은 전혀 다른 클래스!)
