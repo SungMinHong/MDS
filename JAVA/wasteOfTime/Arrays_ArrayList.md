@@ -220,7 +220,7 @@
     }
 ~~~
 
-### 2. set메서드가 구현되어있기 때문에 구글에서 작성한 ImmutableList 클래스와는 차이가 있었다. Arrays.asList()의 반환형인 Arrays내 ArrayList는 set을 재구현하고 사용할 수 있도록 하기 때문에 Immutable 하다고 정의하는 건 무리가 있다고 생각합니다!
+### 2. set메서드가 구현되어있기 때문에 구글에서 작성한 ImmutableList 클래스와는 차이가 있었다. Arrays.asList()의 반환형인 Arrays내 ArrayList는 set을 재구현했기 때문에 set 연산이 가능해진다. 이 점으로 인해 Arrays내 ArrayList가 Immutable 하다고 정의하는 건 무리가 있다고 생각된다.
 ~~~java
   //이건 ImmutableList의 set입니다.
   /**
